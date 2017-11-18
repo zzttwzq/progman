@@ -83,7 +83,9 @@ var controllers = angular.module("controller",[
   }
 
   //分享
-  $scope.
+  $scope.func = function(){
+
+  }
 })
 .controller("project",function($scope){
 
