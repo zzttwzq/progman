@@ -19,10 +19,10 @@ var app = angular.module("app",[
     controller:'project',
     cache: false,
   })
-  .state('addproject',{
-    url: '/addproject',
-    templateUrl: "/progman/tpls/addproject.php",
-    controller:'addproject',
+  .state('newproject',{
+    url: '/newproject',
+    templateUrl: "/progman/tpls/newproject.php",
+    controller:'newproject',
     cache: false,
   })
   .state('note',{

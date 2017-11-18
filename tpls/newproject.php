@@ -38,7 +38,7 @@
 
 <div class="main animated fadeInRight">
 
-  <h2 class="titles">随身笔记</h2>
+  <h2 class="titles">添加项目</h2>
 
   <div class="">
     <div class="listview">
