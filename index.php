@@ -14,10 +14,10 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
 
     <!-- icon图标 -->
-    <link rel="icon" href="http://localhost/progman/imgs/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="http://120.78.131.83/progman/imgs/favicon.ico" type="image/x-icon">
 
     <!-- 引入自己的主题 -->
-    <link rel="stylesheet" href="http://localhost/progman/css/theme.css">
+    <link rel="stylesheet" href="http://120.78.131.83/progman/css/theme.css">
 
     <!-- 引入动画库 -->
     <link rel="stylesheet" href="http://apps.bdimg.com/libs/animate.css/3.1.0/animate.min.css">
@@ -33,16 +33,16 @@
     <script src="https://cdn.bootcss.com/angular.js/1.6.6/angular.min.js"></script>
 
     <!-- chartjs -->
-    <!-- <script src="http://localhost/progman/lib/Chart.min.js"></script> -->
+    <!-- <script src="http://120.78.131.83/progman/lib/Chart.min.js"></script> -->
 
     <!-- ui.route -->
     <script src="https://cdn.bootcss.com/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
 
     <!-- 自己的js -->
-    <script src='http://localhost/progman/js/ngfactory/factory.js' charset='utf-8'></script>
-    <script src='http://localhost/progman/js/ngdirective/directive.js' charset='utf-8'></script>
-    <script src='http://localhost/progman/js/ngcontroller/controller.js' charset='utf-8'></script>
-    <script src='http://localhost/progman/js/app.js' charset='utf-8'></script>
+    <script src='http://120.78.131.83/progman/js/ngfactory/factory.js' charset='utf-8'></script>
+    <script src='http://120.78.131.83/progman/js/ngdirective/directive.js' charset='utf-8'></script>
+    <script src='http://120.78.131.83/progman/js/ngcontroller/controller.js' charset='utf-8'></script>
+    <script src='http://120.78.131.83/progman/js/app.js' charset='utf-8'></script>
 
     <style media="screen">
 
