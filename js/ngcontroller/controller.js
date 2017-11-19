@@ -49,7 +49,8 @@ var controllers = angular.module("controller",[
 
 
   $scope.list = [{usrimg:"/progman/imgs/logo.jpg",pic:"/progman/imgs/ios.png",title:"iOS最新机型的适配",detial:"适配是一个大问题，如果做的",username:"fred",date:"2017-11-18",time:"21:50",share:"99",comment:"1000",good:"20001"},
-  ];
+  {usrimg:"/progman/imgs/logo.jpg",pic:"/progman/imgs/php.png",title:"PHP学习",detial:"适配是一个大问题，如果做的",username:"fred",date:"2017-11-18",time:"21:50",share:"99",comment:"1000",good:"20001"},
+  {usrimg:"/progman/imgs/logo.jpg",pic:"/progman/imgs/java.png",title:"java学习",detial:"适配是一个大问题，如果做的",username:"fred",date:"2017-11-18",time:"21:50",share:"99",comment:"1000",good:"20001"}];
 
   //按钮点击 添加选中的颜色
   var lastclick = 0;
