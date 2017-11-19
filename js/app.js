@@ -31,5 +31,11 @@ var app = angular.module("app",[
     controller:'note',
     cache: false,
   })
+  .state('detial',{
+    url: '/detial',
+    templateUrl: "/progman/tpls/learningdetial.php",
+    controller:'detial',
+    cache: false,
+  })
 
 });

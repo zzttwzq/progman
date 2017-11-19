@@ -97,11 +97,13 @@
       </div>
       <!-- 左侧导航界面 -->
 
-
+      <!-- 路由界面 -->
       <div class="content" ui-view></div>
+      <!-- 路由界面 -->
 
-
+      <!-- 清除浮动 -->
       <div class="clearfix"></div>
+      <!-- 清除浮动 -->
     </div>
   </body>
 </html>
