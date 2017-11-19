@@ -6,6 +6,13 @@
   .main{
     margin-left: 60px;
   }
+  .indexlistcell{
+    cursor: pointer;
+  }
+  .indexlistcell:hover{
+    background: rgb(245,245,245);
+  }
+
   .listview{
     background: white;
     border-radius: 10px;
@@ -56,7 +63,7 @@
   .celldetial{
     margin-top: -10px;
     font-size: 15px;
-    color: rgb(108, 108, 108);
+    color: rgb(122, 122, 122);
   }
 
   .celrightbottom{
@@ -73,17 +80,27 @@
   .cellname{
     margin-left: 10px;
     font-size: 16px;
-    color: rgb(108, 108, 108);
+    color: rgb(122, 122, 122);
   }
   .celldate{
     margin-left: 30px;
     font-size: 16px;
-    color: rgb(108, 108, 108);
+    color: rgb(122, 122, 122);
   }
   .celltime{
     margin-left: 10px;
     font-size: 15px;
-    color: rgb(108, 108, 108);
+    color: rgb(122, 122, 122);
+  }
+
+  .celltitleactive{
+    color: rgb(255, 195, 63);
+  }
+  .celltitleactive2{
+    color: rgb(122, 122, 122);
+  }
+  .celltitledeactive{
+    color: black;
   }
 </style>
 
@@ -99,7 +116,7 @@
         <div class="cellright">
 
           <div class="celrighttop">
-            <p class="celltiles"><strong>{{item.title}}</strong></p>
+            <p class="celltiles" ng-class="{2:'celltitleactive2',1:'celltitleactive',0:'celltitledeactive'}[item.active]"><strong>{{item.title}}</strong></p>
             <p class="celldetial">{{item.detial}}</p>
           </div>
 
@@ -109,7 +126,7 @@
             <span class="celldate">{{item.date}}</span>
             <span class="celltime">{{item.time}}</span>
 
-            <div class="functions" style="margin-left:79px;margin-top:2px;float:right;color:rgb(108, 108, 108)">
+            <div class="functions" style="margin-left:79px;margin-top:2px;float:right;color:rgb(122, 122, 122)">
 
               <div style="float:right;cursor:pointer;" ng-click="func(0)">
                 <span class="glyphicon glyphicon-thumbs-up"></span>

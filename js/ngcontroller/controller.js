@@ -48,39 +48,30 @@ var controllers = angular.module("controller",[
 .controller("indexlist",function($scope){
 
 
-  $scope.list = [{usrimg:"/progman/imgs/logo.jpg",pic:"/progman/imgs/ios.png",title:"iOS最新机型的适配",detial:"适配是一个大问题，如果做的",username:"fred",date:"2017-11-18",time:"21:50",share:"99",comment:"1000",good:"20001"},
-  {usrimg:"/progman/imgs/logo.jpg",pic:"/progman/imgs/php.png",title:"PHP学习",detial:"适配是一个大问题，如果做的",username:"fred",date:"2017-11-18",time:"21:50",share:"99",comment:"1000",good:"20001"},
-  {usrimg:"/progman/imgs/logo.jpg",pic:"/progman/imgs/java.png",title:"java学习",detial:"适配是一个大问题，如果做的",username:"fred",date:"2017-11-18",time:"21:50",share:"99",comment:"1000",good:"20001"}];
+  $scope.list = [{active:"0",usrimg:"/progman/imgs/logo.jpg",pic:"/progman/imgs/ios.png",title:"iOS最新机型的适配",detial:"适配是一个大问题，如果做的",username:"fred",date:"2017-11-18",time:"21:50",share:"99",comment:"1000",good:"20001"},
+  {active:"0",usrimg:"/progman/imgs/logo.jpg",pic:"/progman/imgs/php.png",title:"PHP学习",detial:"适配是一个大问题，如果做的",username:"fred",date:"2017-11-18",time:"21:50",share:"99",comment:"1000",good:"20001"},
+  {active:"0",usrimg:"/progman/imgs/logo.jpg",pic:"/progman/imgs/java.png",title:"java学习",detial:"适配是一个大问题，如果做的",username:"fred",date:"2017-11-18",time:"21:50",share:"99",comment:"1000",good:"20001"}];
 
   //按钮点击 添加选中的颜色
-  var lastclick = 0;
   $scope.click = function(item){
-    item.active = true;
-
-    var olditem = $scope.list[lastclick];
-    olditem.active = false;
-
-    lastclick = item.page;
+    item.active = 2;
     $scope.list = $scope.list;
-
-    //进入页面
-    $state.go(item.url);
   }
 
   //经过按钮 添加选中的颜色
   $scope.over = function(item){
-    item.active = true;
-    $scope.list = $scope.list;
+    if (item.active != 2) {
+      item.active = 1;
+      $scope.list = $scope.list;
+    }
   }
 
   //离开按钮 去掉选中的颜色
   $scope.leave = function(item){
-    item.active = false;
-
-    var olditem = $scope.list[lastclick];
-    olditem.active = true;
-
-    $scope.list = $scope.list;
+    if (item.active != 2) {
+      item.active = 0;
+      $scope.list = $scope.list;
+    }
   }
 
   //分享
