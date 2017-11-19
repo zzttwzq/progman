@@ -16,12 +16,14 @@ li{
 /*左侧界面*/
 .leftview-web{
   width: 250px;
-  height: 776px;
+  height: 100%;
   background: rgb(26,30,43);
   float: left;
   position: fixed;
   top: 0px;
   left: 0px;
+  overflow: hidden;
+  z-index: 9999;
 }
 
 .usertitle{
@@ -78,16 +80,18 @@ li{
 }
 
 .datetime{
-  margin-top: 420px;
-  margin-right: 10px;
+  /*margin-top: 140%;
+  margin-right: 10px;*/
   color: white;
   float: right;
+  position: fixed;
+  bottom: 30px;
+  left: 150px;
 }
 
 /*右侧界面*/
 .content{
   width: 1100px;
-  height: 776px;
-  /*float: left;*/
+  height: 100%;
   margin-left: 250px;
 }

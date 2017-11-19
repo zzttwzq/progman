@@ -83,8 +83,18 @@ var controllers = angular.module("controller",[
   }
 
   //分享
-  $scope.func = function(){
+  $scope.func = function(tag){
 
+    if (tag == 0) {
+
+      alert("点赞");
+    }else if (tag == 1) {
+
+      alert("评论");
+    }else if (tag == 2) {
+
+      alert("分享");
+    }
   }
 })
 .controller("project",function($scope){

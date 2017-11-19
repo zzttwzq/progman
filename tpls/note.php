@@ -44,7 +44,7 @@
     <div class="listview">
 
       <div class="indexlistcell">
-        <img class="listcellimg" src="" alt="">
+
       </div>
     </div>
 
