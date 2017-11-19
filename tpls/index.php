@@ -35,6 +35,7 @@
     background: red;
     float: left;
     margin: 30px 30px;
+    border-radius: 5px;
   }
   .cellright{
     float: left;
