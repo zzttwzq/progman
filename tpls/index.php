@@ -32,7 +32,6 @@
   .listcellimg{
     width: 100px;
     height: 100px;
-    background: red;
     float: left;
     margin: 30px 30px;
     border-radius: 5px;
@@ -67,7 +66,6 @@
     width: 30px;
     height: 30px;
     border-radius: 15px;
-    background: green;
     float: left;
     margin-top: -5px;
   }
@@ -97,7 +95,7 @@
     <div class="listview">
 
       <div class="indexlistcell" ng-mouseover="over(item)" ng-mouseleave="leave(item)" ng-click="click(item)" ng-repeat="item in list">
-        <img class="listcellimg" src="" alt="">
+        <img class="listcellimg" ng-src="{{item.pic}}" alt="">
         <div class="cellright">
 
           <div class="celrighttop">
@@ -106,7 +104,7 @@
           </div>
 
           <div class="celrightbottom">
-            <img class="celluserimg" src="" alt="">
+            <img class="celluserimg" ng-src="{{item.usrimg}}" alt="">
             <span class="cellname">{{item.username}}</span>
             <span class="celldate">{{item.date}}</span>
             <span class="celltime">{{item.time}}</span>
