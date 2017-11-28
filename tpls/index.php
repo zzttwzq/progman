@@ -121,7 +121,7 @@
       <div class="indexlistcell" ng-mouseover="over(item)" ng-mouseleave="leave(item)" ng-click="click(item)" ng-repeat="item in list">
 
         <!-- cell图片 -->
-        <img class="listcellimg" ng-src="{{item.pic}}" alt="">
+        <img class="listcellimg" ng-src="{{item.img}}" alt="">
         <!-- cell图片 -->
 
         <div class="cellright">
@@ -129,7 +129,7 @@
           <!-- cell头部，包括标题和摘要 -->
           <div class="celrighttop">
             <p class="celltiles" ng-class="{2:'celltitleactive2',1:'celltitleactive',0:'celltitledeactive'}[item.active]"><strong>{{item.title}}</strong></p>
-            <p class="celldetial">{{item.detial}}</p>
+            <p class="celldetial">{{item.brief}}</p>
           </div>
           <!-- cell头部，包括标题和摘要 -->
 
@@ -145,7 +145,7 @@
 
               <div style="float:right;cursor:pointer;" ng-click="func(0)">
                 <span class="glyphicon glyphicon-thumbs-up"></span>
-                <span>{{item.good}}</span>
+                <span>{{item.star}}</span>
               </div>
 
               <div style="float:right;cursor:pointer;" ng-click="func(1)">

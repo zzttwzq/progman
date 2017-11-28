@@ -45,15 +45,26 @@ var controllers = angular.module("controller",[
     $scope.list = $scope.list;
   }
 })
-.controller("indexlist",function($scope,$state){
+.controller("indexlist",function($scope,$state,urlService,netReuqest,localstorage){
 
-  $scope.list = [{active:"0",usrimg:"/progman/imgs/logo.jpg",pic:"/progman/imgs/ios.png",title:"iOS最新机型的适配",detial:"适配是一个大问题，如果做的",username:"fred",date:"2017-11-18",time:"21:50",share:"99",comment:"1000",good:"20001"},
-  {active:"0",usrimg:"/progman/imgs/logo.jpg",pic:"/progman/imgs/php.png",title:"PHP学习",detial:"适配是一个大问题，如果做的",username:"fred",date:"2017-11-18",time:"21:50",share:"99",comment:"1000",good:"20001"},
-  {active:"0",usrimg:"/progman/imgs/logo.jpg",pic:"/progman/imgs/java.png",title:"java学习",detial:"适配是一个大问题，如果做的",username:"fred",date:"2017-11-18",time:"21:50",share:"99",comment:"1000",good:"20001"}];
+  //请求网络
+  netReuqest.updatedata(urlService.gettasklist,{page:"0"},function(response){
 
+    $scope.list = response.data["data"];
+    for (var i = 0; i < $scope.list.length; i++) {
 
-  
+      var item = $scope.list[i];
+      item.active = "0";
+      item.username = "吴志强"; //localstorage.getItem("username");
+      item.usrimg = "http://localhost/progman/imgs/logo.jpg"; //localstorage.getItem("userimg");
 
+      var array = item["datetime"].split(" ");
+      item.date = array[0];
+      item.time = array[1];
+    }
+
+    $scope.list = $scope.list;
+  });
 
   //按钮点击 添加选中的颜色
   $scope.click = function(item){
@@ -96,21 +107,13 @@ var controllers = angular.module("controller",[
 })
 .controller("project",function($scope){
 
-
-
 })
 .controller("newproject",function($scope){
-
-
 
 })
 .controller("note",function($scope){
 
-
-
 })
 .controller("detial",function($scope){
-
-
 
 });

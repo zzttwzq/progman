@@ -35,10 +35,10 @@ var factorys = angular.module("factory",[])
     index:"/myweb2/index.php",
 
     adduser:"/myphp/business/login_register/login_register.php?action=add",
-    login:"/myphp/business/login_register/login_register.php?action=login",
+    login:"/myphp/business/progman/login.php?action=login",
     logout:"/myphp/business/login_register/login_register.php?action=logout",
 
-    getpagelist:"/myphp/business/task/task.php?action=getlist",
+    gettasklist:"/myphp/business/progman/project.php?action=getTaskList",
     addlist:"/myphp/business/task/task.php?action=addlist",
     deletelist:"/myphp/business/task/task.php?action=deletelist",
     updatelist:"/myphp/business/task/task.php?action=updatelist",
