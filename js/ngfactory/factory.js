@@ -25,28 +25,14 @@ var factorys = angular.module("factory",[])
 })
 .factory('urlService', function() {
   var service = {
-    temp_pagelistitem:"/myweb2/tpls/indexlistitem.html",
-    temp_navigation:"/myweb2/tpls/navigation.html",
-    temp_rightview:"/myweb2/tpls/rightview.html",
-
-    managerlogin:"/myweb2/managerlogin.php",
-    managerindex:"/myweb2/app/manager/manager.php",
-    pagedetial:"/myweb2/app/front/detial.php",
-    index:"/myweb2/index.php",
-
     adduser:"/myphp/business/login_register/login_register.php?action=add",
     login:"/myphp/business/progman/login.php?action=login",
     logout:"/myphp/business/login_register/login_register.php?action=logout",
 
     gettasklist:"/myphp/business/progman/project.php?action=getTaskList",
-    addlist:"/myphp/business/task/task.php?action=addlist",
-    deletelist:"/myphp/business/task/task.php?action=deletelist",
-    updatelist:"/myphp/business/task/task.php?action=updatelist",
-
-    gettaglist:"/myphp/business/task/task.php?action=gettags",
-    savetag:"/myphp/business/task/task.php?action=addtag",
-    updatetag:"/myphp/business/task/task.php?action=updatetag",
-    deletetag:"/myphp/business/task/task.php?action=deletetag",
+    addtasklist:"/myphp/business/progman/project.php?action=getTaskList",
+    deletetasklist:"/myphp/business/progman/project.php?action=getTaskList",
+    updatetasklist:"/myphp/business/progman/project.php?action=getTaskList",
   };
   return service;
 })

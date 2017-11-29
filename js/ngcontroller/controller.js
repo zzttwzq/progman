@@ -7,7 +7,8 @@ var controllers = angular.module("controller",[
   $scope.list = [{name:"学习记录",img:"glyphicon glyphicon-home cellimg",active:"true",page:0,url:"index"},
                 {name:"我的项目",img:"glyphicon glyphicon-book cellimg",active:"false",page:1,url:"project"},
                 {name:"添加项目",img:"glyphicon glyphicon-plus-sign cellimg",active:"false",page:2,url:"newproject"},
-                {name:"随身笔记",img:"glyphicon glyphicon-edit cellimg",active:"false",page:3,url:"note"}];
+                {name:"随身笔记",img:"glyphicon glyphicon-edit cellimg",active:"false",page:3,url:"note"},
+                {name:"笔记管理",img:"glyphicon glyphicon-edit cellimg",active:"false",page:4,url:"notelist"}];
   var myDate = new Date();
   $scope.datetime = myDate.toLocaleDateString();     //获取当前日期
 
@@ -107,13 +108,107 @@ var controllers = angular.module("controller",[
 })
 .controller("project",function($scope){
 
+
 })
 .controller("newproject",function($scope){
 
-})
-.controller("note",function($scope){
 
 })
+.controller("note",function($scope,$state,urlService,netReuqest,datashare){
+
+  $scope.title = "";
+  $scope.brief = "";
+  $scope.tag = "";
+  $scope.text = "";
+
+  //判断是否有id
+  if (datashare.id != 0) {
+
+    //请求网络
+    netReuqest.updatedata(urlService.gettasklist,{page:"0",filter:"where id ="+datashare.id},function(response){
+
+      var array = response.data["data"];
+      var obj = array[0];
+
+      $scope.title = obj.title;
+      $scope.brief = obj.brief;
+      $scope.tag = obj.tag;
+      $scope.text = obj.text;
+    });
+  }
+
+  //========================保存===================
+  $scope.save = function (){
+
+    var obj = {};
+    obj.title = $scope.title;
+    obj.brief = $scope.brief;
+    obj.tag = $scope.tag;
+    obj.text = $scope.text;
+
+    //判断是否有id
+    if (datashare.id == 0) { //增加
+
+      //请求网络
+      netReuqest.updatedata(urlService.addtasklist,obj,function(response){
+
+        alert(response.data["msg"]);
+        if (response.data["result"]) {
+
+        }
+      });
+    }else { //修改
+
+      //请求网络
+      netReuqest.updatedata(urlService.updatetasklist,obj,function(response){
+
+        alert(response.data["msg"]);
+        if (response.data["result"]) {
+
+        }
+      });
+    }
+  }
+
+  //===============添加文章内容按钮===============
+  //添加字符串
+  $scope.string = function (){
+
+    $scope.text = $scope.text+"\n[string] [end]";
+  };
+  //添加标题
+  $scope.subtitle = function (){
+
+    $scope.text = $scope.text+"\n[subtitle] [end]";
+  };
+  //添加代码
+  $scope.code = function (){
+
+    $scope.text = $scope.text+"\n[code] [end]";
+  };
+  //添加图片
+  $scope.img = function (){
+
+    $scope.text = $scope.text+"\n[img] [end]";
+  };
+
+  //===============下面的功能===============
+  //返回列表
+  $scope.backtolist = function (){
+
+    $state.go("pageman");
+  };
+  //查看文章
+  $scope.see = function (){
+
+    window.location.href = urlService.pagedetial+"?id="+id;
+  }
+})
 .controller("detial",function($scope){
+
+
+})
+.controller("notelist",function($scope){
+
 
 });

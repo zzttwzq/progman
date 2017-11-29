@@ -1,0 +1,33 @@
+<style media="screen">
+  .titles{
+    margin-top: 60px;
+    margin-bottom: 30px;
+  }
+  .main{
+    margin-left: 60px;
+  }
+  .listview{
+    background: white;
+    border-radius: 10px;
+    width: 700px;
+    height: 900px;
+    float: left;
+  }
+  .line2{
+    width: 100%;
+    background: black;
+    height: 2px;
+  }
+</style>
+
+<div class="main animated fadeInRight">
+
+  <h2 class="titles">笔记管理</h2>
+
+  <div class="">
+    <div class="listview">
+
+
+    </div>
+  </div>
+</div>
