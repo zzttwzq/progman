@@ -8,7 +8,7 @@ var controllers = angular.module("controller",[
                 {name:"我的项目",img:"glyphicon glyphicon-book cellimg",active:"false",page:1,url:"project"},
                 {name:"添加项目",img:"glyphicon glyphicon-plus-sign cellimg",active:"false",page:2,url:"newproject"},
                 {name:"随身笔记",img:"glyphicon glyphicon-edit cellimg",active:"false",page:3,url:"note"},
-                {name:"笔记管理",img:"glyphicon glyphicon-edit cellimg",active:"false",page:4,url:"notelist"}];
+                {name:"笔记管理",img:"glyphicon glyphicon-th-list cellimg",active:"false",page:4,url:"notelist"}];
   var myDate = new Date();
   $scope.datetime = myDate.toLocaleDateString();     //获取当前日期
 
@@ -114,18 +114,20 @@ var controllers = angular.module("controller",[
 
 
 })
-.controller("note",function($scope,$state,urlService,netReuqest,datashare){
+.controller("note",function($scope,$state,urlService,netReuqest){
 
   $scope.title = "";
   $scope.brief = "";
   $scope.tag = "";
   $scope.text = "";
 
+  var itemid = window.location.href.split("?");
+
   //判断是否有id
-  if (datashare.id != 0) {
+  if (itemid.length > 1) {
 
     //请求网络
-    netReuqest.updatedata(urlService.gettasklist,{page:"0",filter:"where id ="+datashare.id},function(response){
+    netReuqest.updatedata(urlService.gettasklist,{page:"0",filter:"where "+itemid[1]},function(response){
 
       var array = response.data["data"];
       var obj = array[0];
@@ -134,11 +136,12 @@ var controllers = angular.module("controller",[
       $scope.brief = obj.brief;
       $scope.tag = obj.tag;
       $scope.text = obj.text;
+      $scope.id = obj.id;
     });
   }
 
   //========================保存===================
-  $scope.save = function (){
+  $scope.save = function (item){
 
     var obj = {};
     obj.title = $scope.title;
@@ -147,7 +150,7 @@ var controllers = angular.module("controller",[
     obj.text = $scope.text;
 
     //判断是否有id
-    if (datashare.id == 0) { //增加
+    if (itemid.length == 1) { //增加
 
       //请求网络
       netReuqest.updatedata(urlService.addtasklist,obj,function(response){
@@ -157,7 +160,10 @@ var controllers = angular.module("controller",[
 
         }
       });
-    }else { //修改
+    }
+    else { //修改
+
+      obj.id = $scope.id;
 
       //请求网络
       netReuqest.updatedata(urlService.updatetasklist,obj,function(response){
@@ -204,11 +210,92 @@ var controllers = angular.module("controller",[
     window.location.href = urlService.pagedetial+"?id="+id;
   }
 })
-.controller("detial",function($scope){
+.controller("detial",function($scope,netReuqest,urlService){
 
+  $scope.data = {"title":"asdf"};
+  var itemid = window.location.href.split("?");
+  //请求网络
+  netReuqest.updatedata(urlService.gettasklist,{page:"0",filter:"where "+itemid[1]},function(response){
 
+    $scope.data = response.data["data"][0];
+
+    var list = $scope.data.text.split("[end]");
+    for (var i = 0; i < list.length; i++) {
+      var string = list[i];
+
+      if (string.indexOf("[subtitle]") >= 0) {
+
+        string = string.replace("[subtitle]","");
+        string = "<h3 class='subtitle'>"+string.split("\n").join("<br>")+"</h3>";
+      }else if (string.indexOf("[code]") >= 0) {
+
+        string = string.replace("[code]","");
+        string = string.replace(/</g, '&lt;');
+        string = string.replace(/>/g, '&gt;');
+        string = "<pre class='code'><code>"+string.split("\n").join("<br>")+"</code></pre>";
+        string = string.replace("<br>","");
+
+      }else if (string.indexOf("[img]") >= 0) {
+
+        string = string.replace("[img]","");
+        string = "<img src='"+string+"'></img>";
+      }else if (string.indexOf("[string]") >= 0) {
+
+        string = string.replace("[string]","");
+        string = "<p class='discription'>"+string+"</p>";
+      }
+
+      $("#content").append(string);
+    }
+  });
 })
-.controller("notelist",function($scope){
+.controller("notelist",function($scope,netReuqest,urlService){
 
+  //请求网络
+  netReuqest.updatedata(urlService.gettasklist,{page:"0"},function(response){
 
+    $scope.list = response.data["data"];
+    for (var i = 0; i < $scope.list.length; i++) {
+
+      var item = $scope.list[i];
+    }
+
+    $scope.list = $scope.list;
+  });
+
+  //删除
+  $scope.delete = function (item){
+
+    //请求网络
+    netReuqest.updatedata(urlService.deletetasklist,{id:item.id},function(response){
+
+      alert(response.data["msg"]);
+      if (response.data["result"] == 1) {
+
+        for (var i = 0; i <$scope.list.length; i++) {
+
+          if ($scope.list[i] == item) {
+
+            $scope.list.splice(i,1);
+          }
+        }
+
+        $scope.list = $scope.list;
+      }
+    });
+  }
+
+  //编辑
+  $scope.edit = function (item){
+
+    //默认进入首页
+    window.location.href = "http://localhost/progman/#!/note?id="+item.id;
+  }
+
+  //查看
+  $scope.see = function (item){
+
+    //默认进入首页
+    window.location.href = "http://localhost/progman/#!/detial?id="+item.id;
+  }
 });

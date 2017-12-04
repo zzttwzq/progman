@@ -14,20 +14,6 @@
     float: left;
     padding: 15px 15px;
   }
-  .linkview{
-    background: white;
-    border-radius: 10px;
-    width: 310px;
-    height: 200px;
-    float: left;
-    margin-left: 30px;
-    overflow: hidden;
-  }
-  .line2{
-    width: 100%;
-    background: black;
-    height: 2px;
-  }
 
   .leftinput{
     width: 49%;
@@ -109,13 +95,6 @@
       <div class="clearfix"></div>
       <div class="" style="width:100%;height:50px;"></div>
       <!-- 保存部分 -->
-    </div>
-
-    <div class="linkview">
-      <div class="line2">
-
-      </div>
-
     </div>
   </div>
 </div>

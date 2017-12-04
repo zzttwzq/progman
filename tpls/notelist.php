@@ -9,14 +9,16 @@
   .listview{
     background: white;
     border-radius: 10px;
-    width: 700px;
+    width: 900px;
     height: 900px;
     float: left;
   }
-  .line2{
-    width: 100%;
-    background: black;
-    height: 2px;
+  .td{
+    text-align: center;
+    margin-top: 10px;
+  }
+  .cell{
+    cursor: pointer;
   }
 </style>
 
@@ -27,7 +29,31 @@
   <div class="">
     <div class="listview">
 
-
+      <table class="table table-responsive table-hover table-bordered text-left">
+        <thead>
+          <tr>
+            <th class="col-md-1 tdb">序号</th>
+            <th class="col-md-4 tdb">文章标题</th>
+            <th class="col-md-2 tdb">发布时间</th>
+            <th class="col-md-1 tdb">浏览量</th>
+            <th class="col-md-1 tdb">标签</th>
+            <th class="col-md-2 tdb">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="cell" ng-repeat="item in list" ng-click="see(item)">
+            <td class="col-md-1 tdb"><p class="td">{{$index}}</p></td>
+            <td class="col-md-4 tdb"><p class="td">{{item.title}}</p></td>
+            <td class="col-md-2 tdb"><p class="td">{{item.datetime}}</p></td>
+            <td class="col-md-1 tdb"><p class="td">{{item.star}}</td>
+            <td class="col-md-1 tdb"><p class="td">{{item.tag}}</td>
+            <td class="col-md-2">
+              <button type="button" class="btn btn-default tablebtn1" ng-click="edit(item)"><span class="glyphicon glyphicon-pencil"></span>编辑</button>
+              <button type="button" class="btn btn-default tablebtn2" ng-click="delete(item)"><span class="glyphicon glyphicon-remove-sign"></span>删除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

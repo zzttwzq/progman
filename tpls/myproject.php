@@ -13,20 +13,6 @@
     height: 900px;
     float: left;
   }
-  .linkview{
-    background: white;
-    border-radius: 10px;
-    width: 310px;
-    height: 200px;
-    float: left;
-    margin-left: 30px;
-    overflow: hidden;
-  }
-  .line2{
-    width: 100%;
-    background: black;
-    height: 2px;
-  }
 
   /*cell*/
   .listcellimg{
@@ -46,13 +32,6 @@
       <div class="indexlistcell">
 
       </div>
-    </div>
-
-    <div class="linkview">
-      <div class="line2">
-
-      </div>
-
     </div>
   </div>
 </div>

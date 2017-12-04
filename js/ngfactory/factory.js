@@ -30,9 +30,9 @@ var factorys = angular.module("factory",[])
     logout:"/myphp/business/login_register/login_register.php?action=logout",
 
     gettasklist:"/myphp/business/progman/project.php?action=getTaskList",
-    addtasklist:"/myphp/business/progman/project.php?action=getTaskList",
-    deletetasklist:"/myphp/business/progman/project.php?action=getTaskList",
-    updatetasklist:"/myphp/business/progman/project.php?action=getTaskList",
+    addtasklist:"/myphp/business/progman/project.php?action=addTaskList",
+    deletetasklist:"/myphp/business/progman/project.php?action=deleteTaskList",
+    updatetasklist:"/myphp/business/progman/project.php?action=updateTaskList",
   };
   return service;
 })

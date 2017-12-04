@@ -12,6 +12,7 @@
     width: 700px;
     height: 900px;
     float: left;
+    margin-bottom: 30px;
   }
   .linkview{
     background: white;
@@ -22,29 +23,88 @@
     margin-left: 30px;
     overflow: hidden;
   }
-  .line2{
-    width: 100%;
-    background: black;
-    height: 2px;
+
+  .linetitle1{
+    width: 700px;
+    height: 1px;
+    background: rgb(237, 237, 237);
+    margin-left: -30px;
+    margin-top: 20px;
+  }
+  .logos{
+    width: 50px;
+    float: left;
+    margin-right: 8px;
+  }
+  .brief{
+    margin-top:30px;
+    width:100%;
+    height:80px;
+    background:rgb(247,247,247);
+    /*margin-left: 15%;*/
+  }
+  .lines{
+    width:5px;
+    height:80px;
+    background:rgb(224,108,115);
+    float:left;
+  }
+  .brieftext{
+    padding: 30px 20px;
   }
 
-  /*cell*/
-  .listcellimg{
-    width: 100px;
-    height: 100px;
-    background: red;
+  .subtitle{
+    margin-top: 20px;
+  }
+  .code{
+    margin-top: 20px;
+  }
+  .discription{
+    margin-top: 20px;
+  }
+  .texts{
+    margin-top: 30px;
+    margin-bottom: 30px;
   }
 </style>
 
 <div class="main animated fadeInRight">
 
-  <h2 class="titles">iOSrunloop</h2>
+  <h2 class="titles">{{data.title}}</h2>
 
   <div class="">
     <div class="listview">
 
-      <div class="indexlistcell">
+      <div style="margin-left: 30px;">
 
+        <div style="margin-top:20px;">
+            <img class="logos" ng-src="{{data.pic}}" alt="">
+
+            <div style="float:left;">
+
+                <div class="tag text-center"><span class="glyphicon glyphicon-tag tagimg"></span>&nbsp;{{data.tag}}&nbsp;&nbsp;&nbsp;</div>
+
+                <div class="clearfix"></div>
+
+                <div style="margin-top:10px;color: #808080;font-size:10px">
+                    <span class="glyphicon glyphicon-time"></span>&nbsp;{{data.datetime}}&nbsp;&nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{data.star}}&nbsp;&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="linetitle1"></div>
+
+        <div class="clearfix"></div>
+
+        <div class="brief">
+            <div class="lines"></div>
+            <p class="brieftext">{{data.brief}}</p>
+        </div>
+
+        <div id="content"></div>
       </div>
     </div>
 
