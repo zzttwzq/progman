@@ -104,6 +104,8 @@
             <p class="brieftext">{{data.brief}}</p>
         </div>
 
+        <div style="margin-top:20px;"></div>
+
         <div id="content"></div>
       </div>
     </div>

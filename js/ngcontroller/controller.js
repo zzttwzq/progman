@@ -72,7 +72,8 @@ var controllers = angular.module("controller",[
     item.active = 2;
     $scope.list = $scope.list;
 
-    $state.go("detial");
+    //默认进入首页
+    window.location.href = "http://localhost/progman/#!/detial?id="+item.id;
   }
 
   //经过按钮 添加选中的颜色
