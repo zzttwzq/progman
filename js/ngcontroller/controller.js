@@ -8,7 +8,8 @@ var controllers = angular.module("controller",[
                 {name:"我的项目",img:"glyphicon glyphicon-book cellimg",active:"false",page:1,url:"project"},
                 {name:"添加项目",img:"glyphicon glyphicon-plus-sign cellimg",active:"false",page:2,url:"newproject"},
                 {name:"随身笔记",img:"glyphicon glyphicon-edit cellimg",active:"false",page:3,url:"note"},
-                {name:"笔记管理",img:"glyphicon glyphicon-th-list cellimg",active:"false",page:4,url:"notelist"}];
+                {name:"笔记管理",img:"glyphicon glyphicon-th-list cellimg",active:"false",page:4,url:"notelist"},
+                {name:"日程安排",img:"glyphicon glyphicon-calendar cellimg",active:"false",page:5,url:"datemanager"}];
   var myDate = new Date();
   $scope.datetime = myDate.toLocaleDateString();     //获取当前日期
 
@@ -298,5 +299,97 @@ var controllers = angular.module("controller",[
 
     //默认进入首页
     window.location.href = "http://localhost/progman/#!/detial?id="+item.id;
+  }
+})
+.controller("datemanager",function($scope,netReuqest,urlService){
+
+  var myDate = new Date();
+  myDate.setDate(myDate.getDate()-1);
+  var month = myDate.getMonth()+1;
+  var datetimestring = myDate.getFullYear()+""+month+""+myDate.getDate();
+
+  $scope.lastday = 0;
+  $scope.total = 0;
+
+  // 请求网络
+  netReuqest.updatedata(urlService.getscorelist,{filter:datetimestring},function(response){
+
+
+    var lists = response.data["data"];
+    $scope.total = 0;
+    for (var i = 0; i < lists.length; i++) {
+      var obj = lists[i];
+
+      if (datetimestring == obj.datetime) {
+
+        $scope.lastday = obj.score;
+      }
+
+      $scope.total += Number(obj.score);
+    }
+  });
+
+  $scope.list = [{"datetime":"7:30","title":"起床","finish":false,"btntitle":"完成"},
+                  {"datetime":"7:30-7:40","title":"洗漱","finish":false,"btntitle":"完成"},
+                  {"datetime":"7:40-8:00","title":"冥想","finish":false,"btntitle":"完成"},
+                  {"datetime":"8:00-8:20","title":"吃饭","finish":false,"btntitle":"完成"},
+                  {"datetime":"8:20-8:40","title":"去上班","finish":false,"btntitle":"完成"},
+                  {"datetime":"8:40-10:00","title":"工作","finish":false,"btntitle":"完成"},
+                  {"datetime":"10:00-11:00","title":"工作","finish":false,"btntitle":"完成"},
+                  {"datetime":"11:00-11:40","title":"工作","finish":false,"btntitle":"完成"},
+                  {"datetime":"11:40-13:30","title":"吃饭","finish":false,"btntitle":"完成"},
+                  {"datetime":"13:30-14:30","title":"工作","finish":false,"btntitle":"完成"},
+                  {"datetime":"14:30-15:30","title":"工作","finish":false,"btntitle":"完成"},
+                  {"datetime":"15:30-16:30","title":"工作","finish":false,"btntitle":"完成"},
+                  {"datetime":"16:30-17:30","title":"工作","finish":false,"btntitle":"完成"},
+                  {"datetime":"17:30-18:00","title":"吃完饭","finish":false,"btntitle":"完成"},
+                  {"datetime":"18:00-18:20","title":"回家","finish":false,"btntitle":"完成"},
+                  {"datetime":"18:20-19:20","title":"1","finish":false,"btntitle":"完成"},
+                  {"datetime":"19:20-19:40","title":"休息","finish":false,"btntitle":"完成"},
+                  {"datetime":"19:40-20:40","title":"2","finish":false,"btntitle":"完成"},
+                  {"datetime":"20:40-21:00","title":"休息","finish":false,"btntitle":"完成"},
+                  {"datetime":"21:00-21:30","title":"3","finish":false,"btntitle":"完成"},
+                  {"datetime":"21:30-22:00","title":"看书","finish":false,"btntitle":"完成"},
+                  {"datetime":"22:00-22:30","title":"洗漱和冥想","finish":false,"btntitle":"完成"},
+                  {"datetime":"22:30","title":"睡觉","finish":false,"btntitle":"完成"},];
+
+  //保存单个状态
+  $scope.chose = function (item){
+    if (item.finish == true) {
+
+      item.finish = false;
+      item.btntitle = "完成";
+    }else {
+
+      item.finish = true;
+      item.btntitle = "已完成";
+    }
+
+    $scope.list = $scope.list;
+  }
+
+  //保存整个记录
+  $scope.savebtnsate = true;
+  $scope.save = function (){
+
+    var count = 0;
+    for (var i = 0; i < $scope.list.length; i++) {
+
+      var obj = $scope.list[i];
+      if (obj.finish) {
+
+        count ++;
+      }
+    }
+
+    var myDate = new Date();
+    var month = myDate.getMonth()+1;
+    var datetimestring = myDate.getFullYear()+""+month+""+myDate.getDate();
+
+    // 请求网络
+    netReuqest.updatedata(urlService.addscorelist,{datetime:datetimestring,score:count+""},function(response){
+
+
+    });
   }
 });

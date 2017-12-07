@@ -43,5 +43,11 @@ var app = angular.module("app",[
     controller:'notelist',
     cache: false,
   })
+  .state('datemanager',{
+    url: '/datemanager',
+    templateUrl: "/progman/tpls/datemanager.php",
+    controller:'datemanager',
+    cache: false,
+  })
 
 });

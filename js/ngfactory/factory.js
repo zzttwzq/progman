@@ -33,6 +33,9 @@ var factorys = angular.module("factory",[])
     addtasklist:"/myphp/business/progman/project.php?action=addTaskList",
     deletetasklist:"/myphp/business/progman/project.php?action=deleteTaskList",
     updatetasklist:"/myphp/business/progman/project.php?action=updateTaskList",
+
+    addscorelist:"/myphp/business/progman/project.php?action=addScoreList",
+    getscorelist:"/myphp/business/progman/project.php?action=getScoreList",
   };
   return service;
 })
