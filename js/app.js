@@ -9,43 +9,43 @@ var app = angular.module("app",[
   $stateProvider
   .state('index',{
     url: '/index',
-    templateUrl: "/progman/tpls/index.php",
+    templateUrl: "/progman/tpls/index.html",
     controller:'indexlist',
     cache: false,
   })
   .state('project',{
     url: '/project',
-    templateUrl: "/progman/tpls/myproject.php",
+    templateUrl: "/progman/tpls/myproject.html",
     controller:'project',
     cache: false,
   })
   .state('newproject',{
     url: '/newproject',
-    templateUrl: "/progman/tpls/newproject.php",
+    templateUrl: "/progman/tpls/newproject.html",
     controller:'newproject',
     cache: false,
   })
   .state('note',{
     url: '/note',
-    templateUrl: "/progman/tpls/note.php",
+    templateUrl: "/progman/tpls/note.html",
     controller:'note',
     cache: false,
   })
   .state('detial',{
     url: '/detial',
-    templateUrl: "/progman/tpls/learningdetial.php",
+    templateUrl: "/progman/tpls/learningdetial.html",
     controller:'detial',
     cache: false,
   })
   .state('notelist',{
     url: '/notelist',
-    templateUrl: "/progman/tpls/notelist.php",
+    templateUrl: "/progman/tpls/notelist.html",
     controller:'notelist',
     cache: false,
   })
   .state('datemanager',{
     url: '/datemanager',
-    templateUrl: "/progman/tpls/datemanager.php",
+    templateUrl: "/progman/tpls/datemanager.html",
     controller:'datemanager',
     cache: false,
   })
