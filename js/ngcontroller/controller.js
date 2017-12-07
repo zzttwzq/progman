@@ -58,7 +58,7 @@ var controllers = angular.module("controller",[
       var item = $scope.list[i];
       item.active = "0";
       item.username = "吴志强"; //localstorage.getItem("username");
-      item.usrimg = "http://localhost/progman/imgs/logo.jpg"; //localstorage.getItem("userimg");
+      item.usrimg = urlService.mainservice+"imgs/logo.jpg"; //localstorage.getItem("userimg");
 
       var array = item["datetime"].split(" ");
       item.date = array[0];
@@ -74,7 +74,7 @@ var controllers = angular.module("controller",[
     $scope.list = $scope.list;
 
     //默认进入首页
-    window.location.href = "http://localhost/progman/#!/detial?id="+item.id;
+    window.location.href = urlService.mainservice+"#!/detial?id="+item.id;
   }
 
   //经过按钮 添加选中的颜色
@@ -291,14 +291,14 @@ var controllers = angular.module("controller",[
   $scope.edit = function (item){
 
     //默认进入首页
-    window.location.href = "http://localhost/progman/#!/note?id="+item.id;
+    window.location.href = urlService.mainservice+"#!/note?id="+item.id;
   }
 
   //查看
   $scope.see = function (item){
 
     //默认进入首页
-    window.location.href = "http://localhost/progman/#!/detial?id="+item.id;
+    window.location.href = urlService.mainservice+"#!/detial?id="+item.id;
   }
 })
 .controller("datemanager",function($scope,netReuqest,urlService){
