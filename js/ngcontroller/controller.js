@@ -284,8 +284,7 @@ var controllers = angular.module("controller",[
 
         $scope.list = $scope.list;
       }
-    });
-  }
+   }
 
   //编辑
   $scope.edit = function (item){

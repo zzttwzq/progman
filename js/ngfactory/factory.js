@@ -21,11 +21,12 @@ var factorys = angular.module("factory",[])
 
     localStorage.clear();
   };
+  
   return factory;
 })
 .factory('urlService', function() {
   var service = {
-    mainservice:"http://120.78.131.83/progman/",
+    mainservice:"http://localhost/progman/",
 
     adduser:"/myphp/business/login_register/login_register.php?action=add",
     login:"/myphp/business/progman/login.php?action=login",
@@ -94,7 +95,7 @@ var factorys = angular.module("factory",[])
     //判断自动登录
     var userid = localstorage.getvalue('userid');
     var token = localstorage.getvalue('token');
-    var username = localstorage.getvalue('username');
+    var username = localstorage.getvalue('usernamße');
     var password = localstorage.getvalue('password');
     if (username &&
         password&&
