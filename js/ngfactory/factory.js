@@ -21,7 +21,7 @@ var factorys = angular.module("factory",[])
 
     localStorage.clear();
   };
-  
+
   return factory;
 })
 .factory('urlService', function() {

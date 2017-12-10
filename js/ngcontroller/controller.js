@@ -266,7 +266,7 @@ var controllers = angular.module("controller",[
   });
 
   //删除
-  $scope.delete = function (item){
+  $scope.delete = function (item,e){
 
     //请求网络
     netReuqest.updatedata(urlService.deletetasklist,{id:item.id},function(response){
@@ -284,13 +284,18 @@ var controllers = angular.module("controller",[
 
         $scope.list = $scope.list;
       }
-   }
+   });
+
+   e.stopPropagation();
+  }
 
   //编辑
-  $scope.edit = function (item){
+  $scope.edit = function (item,e){
 
     //默认进入首页
     window.location.href = urlService.mainservice+"#!/note?id="+item.id;
+
+    e.stopPropagation();
   }
 
   //查看
