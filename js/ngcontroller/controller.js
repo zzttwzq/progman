@@ -4,11 +4,11 @@ var controllers = angular.module("controller",[
 ])
 .controller("navview",function($scope,$state){
 
-  $scope.list = [{name:"学习记录",img:"glyphicon glyphicon-home cellimg",active:"true",page:0,url:"index"},
-                {name:"我的项目",img:"glyphicon glyphicon-book cellimg",active:"false",page:1,url:"project"},
-                {name:"添加项目",img:"glyphicon glyphicon-plus-sign cellimg",active:"false",page:2,url:"newproject"},
-                {name:"随身笔记",img:"glyphicon glyphicon-edit cellimg",active:"false",page:3,url:"note"},
-                {name:"笔记管理",img:"glyphicon glyphicon-th-list cellimg",active:"false",page:4,url:"notelist"},
+  $scope.list = [{name:"学习记录",img:"glyphicon glyphicon-home cellimg",active:true,page:0,url:"index"},
+                {name:"我的项目",img:"glyphicon glyphicon-book cellimg",active:false,page:1,url:"project"},
+                {name:"添加项目",img:"glyphicon glyphicon-plus-sign cellimg",active:false,page:2,url:"newproject"},
+                {name:"随身笔记",img:"glyphicon glyphicon-edit cellimg",active:false,page:3,url:"note"},
+                {name:"笔记管理",img:"glyphicon glyphicon-th-list cellimg",active:false,page:4,url:"notelist"},
                 // {name:"日程安排",img:"glyphicon glyphicon-calendar cellimg",active:"false",page:5,url:"datemanager"}
               ];
   var myDate = new Date();

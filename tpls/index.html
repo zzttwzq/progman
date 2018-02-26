@@ -6,17 +6,17 @@
   .main{
     margin-left: 60px;
   }
-  .indexlistcell{
+  /* .indexlistcell{
     cursor: pointer;
-  }
-  .indexlistcell:hover{
+  } */
+  /* .indexlistcell:hover{
     background: rgb(245,245,245);
-  }
+  } */
 
   .listview{
     background: white;
     border-radius: 10px;
-    width: 700px;
+    width: 85%;
     height: 900px;
     float: left;
     margin-bottom: 60px;
@@ -42,30 +42,34 @@
     width: 100px;
     height: 100px;
     float: left;
-    margin: 30px 30px;
+    margin-left: 5%;
+    margin-right: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
     border-radius: 5px;
   }
   .cellright{
     float: left;
   }
   .line3{
-    margin-left: 30px;
-    width: 640px;
+    margin-left: 5%;
+    width: 90%;
     height: 1px;
     background: rgb(218, 218, 218);
   }
-
 
   .celrighttop{
     margin-top: 25px;
   }
   .celltiles{
     font-size: 25px;
+    cursor: pointer;
   }
   .celldetial{
     margin-top: -10px;
     font-size: 15px;
     color: rgb(122, 122, 122);
+    cursor: pointer;
   }
 
   .celrightbottom{
@@ -118,7 +122,7 @@
     <div class="listview">
 
       <!-- cell -->
-      <div class="indexlistcell" ng-mouseover="over(item)" ng-mouseleave="leave(item)" ng-click="click(item)" ng-repeat="item in list">
+      <div class="indexlistcell" ng-mouseover="over(item)" ng-mouseleave="leave(item)" ng-repeat="item in list">
 
         <!-- cell图片 -->
         <img class="listcellimg" ng-src="{{item.img}}" alt="">
@@ -127,7 +131,7 @@
         <div class="cellright">
 
           <!-- cell头部，包括标题和摘要 -->
-          <div class="celrighttop">
+          <div class="celrighttop" ng-click="click(item)">
             <p class="celltiles" ng-class="{2:'celltitleactive2',1:'celltitleactive',0:'celltitledeactive'}[item.active]"><strong>{{item.title}}</strong></p>
             <p class="celldetial">{{item.brief}}</p>
           </div>
@@ -168,6 +172,7 @@
         <div class="clearfix"></div>
 
         <div class="line3"></div>
+
       </div>
       <!-- cell -->
 
@@ -178,11 +183,11 @@
     <!-- 列表界面 -->
 
     <!-- 右侧导航界面 -->
-    <div class="linkview">
+    <!-- <div class="linkview">
       <div class="line2">
 
       </div>
-    </div>
+    </div> -->
     <!-- 右侧导航界面 -->
   </div>
 </div>

@@ -15,7 +15,7 @@ li{
 
 /*左侧界面*/
 .leftview-web{
-  width: 250px;
+  width: 20%;
   height: 100%;
   background: rgb(26,30,43);
   float: left;
@@ -80,8 +80,6 @@ li{
 }
 
 .datetime{
-  /*margin-top: 140%;
-  margin-right: 10px;*/
   color: white;
   float: right;
   position: fixed;
@@ -91,7 +89,5 @@ li{
 
 /*右侧界面*/
 .content{
-  width: 1100px;
-  height: 100%;
-  margin-left: 250px;
+  margin-left: 25%;
 }
