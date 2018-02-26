@@ -9,7 +9,8 @@ var controllers = angular.module("controller",[
                 {name:"添加项目",img:"glyphicon glyphicon-plus-sign cellimg",active:"false",page:2,url:"newproject"},
                 {name:"随身笔记",img:"glyphicon glyphicon-edit cellimg",active:"false",page:3,url:"note"},
                 {name:"笔记管理",img:"glyphicon glyphicon-th-list cellimg",active:"false",page:4,url:"notelist"},
-                {name:"日程安排",img:"glyphicon glyphicon-calendar cellimg",active:"false",page:5,url:"datemanager"}];
+                // {name:"日程安排",img:"glyphicon glyphicon-calendar cellimg",active:"false",page:5,url:"datemanager"}
+              ];
   var myDate = new Date();
   $scope.datetime = myDate.toLocaleDateString();     //获取当前日期
 
