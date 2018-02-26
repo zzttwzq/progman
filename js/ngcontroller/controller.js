@@ -333,11 +333,11 @@ var controllers = angular.module("controller",[
     }
   });
 
-  $scope.list = [{"datetime":"7:30","title":"起床","finish":false,"btntitle":"完成"},
-                  {"datetime":"7:30-7:40","title":"洗漱","finish":false,"btntitle":"完成"},
-                  {"datetime":"7:40-8:00","title":"冥想","finish":false,"btntitle":"完成"},
-                  {"datetime":"8:00-8:20","title":"吃饭","finish":false,"btntitle":"完成"},
-                  {"datetime":"8:20-8:40","title":"去上班","finish":false,"btntitle":"完成"},
+  $scope.list = [{"datetime":"7:00","title":"起床","finish":false,"btntitle":"完成"},
+                  {"datetime":"7:00-7:30","title":"运动","finish":false,"btntitle":"完成"},
+                  {"datetime":"7:30-8:00","title":"洗澡","finish":false,"btntitle":"完成"},
+                  {"datetime":"8:00-8:25","title":"冥想","finish":false,"btntitle":"完成"},
+                  {"datetime":"8:25-8:40","title":"去上班","finish":false,"btntitle":"完成"},
                   {"datetime":"8:40-10:00","title":"工作","finish":false,"btntitle":"完成"},
                   {"datetime":"10:00-11:00","title":"工作","finish":false,"btntitle":"完成"},
                   {"datetime":"11:00-11:40","title":"工作","finish":false,"btntitle":"完成"},
@@ -392,7 +392,6 @@ var controllers = angular.module("controller",[
 
     // 请求网络
     netReuqest.updatedata(urlService.addscorelist,{datetime:datetimestring,score:count+""},function(response){
-
 
     });
   }
