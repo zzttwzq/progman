@@ -19,9 +19,9 @@
     text-align: center;
     margin-top: 10px;
   }
-  .cell{
+  /* .cell{
     cursor: pointer;
-  }
+  } */
 </style>
 
 <div class="main animated fadeInRight">
@@ -43,7 +43,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="cell" ng-repeat="item in list" ng-click="see(item)">
+          <tr class="cell" ng-repeat="item in list">
             <td class="col-md-1 tdb"><p class="td">{{$index}}</p></td>
             <td class="col-md-4 tdb"><p class="td">{{item.title}}</p></td>
             <td class="col-md-2 tdb"><p class="td">{{item.datetime}}</p></td>

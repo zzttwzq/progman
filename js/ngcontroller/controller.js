@@ -123,6 +123,7 @@ var controllers = angular.module("controller",[
   $scope.brief = "";
   $scope.tag = "";
   $scope.text = "";
+  $scope.category = "";
 
   var itemid = window.location.href.split("?");
 
@@ -151,6 +152,7 @@ var controllers = angular.module("controller",[
     obj.brief = $scope.brief;
     obj.tag = $scope.tag;
     obj.text = $scope.text;
+    obj.category = $scope.category;
 
     //判断是否有id
     if (itemid.length == 1) { //增加
