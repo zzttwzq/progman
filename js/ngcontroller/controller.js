@@ -11,11 +11,34 @@ var controllers = angular.module("controller",[
                 {name:"笔记管理",img:"glyphicon glyphicon-th-list cellimg",active:false,page:4,url:"notelist"},
                 // {name:"日程安排",img:"glyphicon glyphicon-calendar cellimg",active:"false",page:5,url:"datemanager"}
               ];
-  var myDate = new Date();
-  $scope.datetime = myDate.toLocaleDateString();     //获取当前日期
 
-  //默认进入首页
-  $state.go("index");
+  //显示日期
+  var myDate = new Date();
+  $scope.datetime = myDate.toLocaleDateString();
+
+  //获取当前url判断列表显示的位置
+  var url = window.location.href;
+  if (url.indexOf("index") == -1) {
+    var obj = $scope.list[0];
+    obj.active = false;
+  }
+  if (url.indexOf("project") != -1) {
+
+    var obj = $scope.list[1];
+    obj.active = true;
+  }else if (url.indexOf("newproject") != -1) {
+
+    var obj = $scope.list[2];
+    obj.active = true;
+  }else if (url.indexOf("note") != -1) {
+
+    var obj = $scope.list[3];
+    obj.active = true;
+  }else if (url.indexOf("notelist") != -1) {
+
+    var obj = $scope.list[4];
+    obj.active = true;
+  }
 
   //按钮点击 添加选中的颜色
   var lastclick = 0;
@@ -48,50 +71,45 @@ var controllers = angular.module("controller",[
     $scope.list = $scope.list;
   }
 })
-.controller("indexlist",function($scope,$state,urlService,netReuqest,localstorage){
+.controller("indexlist",function($scope,$state,urlService,netReuqest,localstorage,getlistservice){
 
-  $scope.searchtext = "";
   var page = 0;
+  var filter = "";
+  $scope.list = new Array();
+  //分页数据
+  $scope.listpage = new Array();
+  $scope.searchtext = "";
 
+  //获取数据
+  $scope.clickpage = function (item){
+    page = item.page;
+    getlistservice.getlist($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
+  }
+
+  //第一次数据
+  $scope.clickpage({page:page,active:true});
+
+  //上一个
+  $scope.prevois = function (){
+
+    page = getlistservice.prevois($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
+  }
+  //下一个
+  $scope.next = function (){
+
+    page = getlistservice.next($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
+  }
+
+  //查询
   $scope.search = function(){
 
     //第一次刷新
-    var filters = "where title like "+"\'"+$scope.searchtext+"\'";
+    filter = "where title like "+"\'"+$scope.searchtext+"\'";
     if ($scope.searchtext == "") {
-      filters = "";
+      filter = "";
     }
-    var data = {filter:filters};
-    func(0,data);
+    $scope.clickpage({page:page,active:true});
   };
-
-  //刷新接口
-  var func = function(page,data){
-
-    data.page = page;
-
-    //请求网络
-    netReuqest.updatedata(urlService.gettasklist,data,function(response){
-
-      $scope.list = response.data["data"];
-      for (var i = 0; i < $scope.list.length; i++) {
-
-        var item = $scope.list[i];
-        item.active = "0";
-        item.username = "吴志强"; //localstorage.getItem("username");
-        item.usrimg = urlService.mainservice+"imgs/logo.jpg"; //localstorage.getItem("userimg");
-
-        var array = item["datetime"].split(" ");
-        item.date = array[0];
-        item.time = array[1];
-      }
-
-      $scope.list = $scope.list;
-    });
-  }
-
-  //第一次刷新
-  var data = {};
-  func(0,data);
 
   // //监听刷新通知
   // eventService.on("reloadlist", function (data) {
@@ -286,22 +304,17 @@ var controllers = angular.module("controller",[
     }
   });
 })
-.controller("notelist",function($scope,netReuqest,urlService){
+.controller("notelist",function($scope,netReuqest,urlService,getlistservice){
 
-  //请求网络
-  netReuqest.updatedata(urlService.gettasklist,{page:"0"},function(response){
-
-    $scope.list = response.data["data"];
-    for (var i = 0; i < $scope.list.length; i++) {
-
-      var item = $scope.list[i];
-    }
-
-    $scope.list = $scope.list;
-  });
+  var page = 0;
+  var filter = "";
+  $scope.list = new Array();
+  //分页数据
+  $scope.listpage = new Array();
+  $scope.searchtext = "";
 
   //删除
-  $scope.delete = function (item,e){
+  $scope.delete = function (item){
 
     //请求网络
     netReuqest.updatedata(urlService.deletetasklist,{id:item.id},function(response){
@@ -320,25 +333,46 @@ var controllers = angular.module("controller",[
         $scope.list = $scope.list;
       }
    });
-
-   e.stopPropagation();
   }
 
   //编辑
-  $scope.edit = function (item,e){
+  $scope.edit = function (item){
 
     //默认进入首页
     window.location.href = urlService.mainservice+"#!/note?id="+item.id;
-
-    e.stopPropagation();
   }
 
-  //查看
-  $scope.see = function (item){
 
-    //默认进入首页
-    window.location.href = urlService.mainservice+"#!/detial?id="+item.id;
+  //获取数据
+  $scope.clickpage = function (item){
+    page = item.page;
+    getlistservice.getlist($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
   }
+
+  //第一次数据
+  $scope.clickpage({page:page,active:true});
+
+  //上一个
+  $scope.prevois = function (){
+
+    page = getlistservice.prevois($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
+  }
+  //下一个
+  $scope.next = function (){
+
+    page = getlistservice.next($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
+  }
+
+  //查询
+  $scope.search = function(){
+
+    //第一次刷新
+    filter = "where title like "+"\'"+$scope.searchtext+"\'";
+    if ($scope.searchtext == "") {
+      filter = "";
+    }
+    $scope.clickpage({page:page,active:true});
+  };
 })
 .controller("datemanager",function($scope,netReuqest,urlService){
 
@@ -438,11 +472,27 @@ var controllers = angular.module("controller",[
                     {title:'angular',active:false},
                     {title:'php',active:false},
                     {title:'linux',active:false},
-                    {title:'angular',active:false},
-                    {title:'angular',active:false},
-                    {title:'angular',active:false},
-                    {title:'angular',active:false},
-                    {title:'angular',active:false}];
+                    {title:'vue',active:false},
+                    {title:'rtmp',active:false},];
+
+  //请求网络
+  netReuqest.updatedata(urlService.gettasklist,data,function(response){
+
+    $scope.list = response.data["data"];
+    for (var i = 0; i < $scope.list.length; i++) {
+
+      var item = $scope.list[i];
+      item.active = "0";
+      item.username = "吴志强"; //localstorage.getItem("username");
+      item.usrimg = urlService.mainservice+"imgs/logo.jpg"; //localstorage.getItem("userimg");
+
+      var array = item["datetime"].split(" ");
+      item.date = array[0];
+      item.time = array[1];
+    }
+
+    $scope.list = $scope.list;
+  });
 
   $scope.mostlist = [{title:'1212',active:false},
                     {title:'sadf',active:false},
@@ -469,8 +519,7 @@ var controllers = angular.module("controller",[
     $scope.taglist = $scope.taglist;
     //请求网络
 
-    //触发事件，通知
-     // eventService.trigger("newMess", null);
+
   }
 })
 ;

@@ -26,7 +26,7 @@ var factorys = angular.module("factory",[])
 })
 .factory('urlService', function() {
   var service = {
-    mainservice:"http://localhost/progman/",
+    mainservice:"http://120.78.131.83/progman/",
 
     adduser:"/myphp/business/login_register/login_register.php?action=add",
     login:"/myphp/business/progman/login.php?action=login",
@@ -50,7 +50,8 @@ var factorys = angular.module("factory",[])
     $http.post(url,data)
     .then(function (response){
 
-      if (response.data.total >= 0) {
+      if (response.data.result == 1||
+        response.data.total >= 0) {
 
         back(response);
 
@@ -121,19 +122,13 @@ var factorys = angular.module("factory",[])
 
     var data = {};
     data.page = page;
-    if (filter == "") {
-
-      data.filter = "where username = '"+localstorage.getvalue("username")+"'";
-    }else {
-
-      data.filter = filter+" and username = '"+localstorage.getvalue("username")+"'";
-    }
+    data.filter = filter;
     netReuqest.getlist(url,data,function(response){
 
       //列表数据
-      for (var i = 0; i < response.data.rows.length; i++) {
+      for (var i = 0; i < response.data.data.length; i++) {
 
-        list.push(response.data.rows[i]);
+        list.push(response.data.data[i]);
       }
 
       //分页数组
@@ -161,6 +156,8 @@ var factorys = angular.module("factory",[])
     if (page > listpage) {
 
       page = listpage.length-1;
+    }else {
+      page --;
     }
 
     var obj = listpage[page];
