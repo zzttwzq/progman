@@ -496,7 +496,7 @@ var controllers = angular.module("controller",[
 
   $scope.mostlist = [{title:'第一章',active:false},
                     {title:'第二章',active:false},
-                    {title:'第三章',active:false},],
+                    {title:'第三章',active:false},];
 
   var lastClickTag = 0;
   $scope.tagclick = function(index){
