@@ -475,34 +475,28 @@ var controllers = angular.module("controller",[
                     {title:'vue',active:false},
                     {title:'rtmp',active:false},];
 
-  //请求网络
-  netReuqest.updatedata(urlService.gettasklist,data,function(response){
+  // //请求网络
+  // netReuqest.updatedata(urlService.gettasklist,data,function(response){
+  //
+  //   $scope.list = response.data["data"];
+  //   for (var i = 0; i < $scope.list.length; i++) {
+  //
+  //     var item = $scope.list[i];
+  //     item.active = "0";
+  //     item.username = "吴志强"; //localstorage.getItem("username");
+  //     item.usrimg = urlService.mainservice+"imgs/logo.jpg"; //localstorage.getItem("userimg");
+  //
+  //     var array = item["datetime"].split(" ");
+  //     item.date = array[0];
+  //     item.time = array[1];
+  //   }
+  //
+  //   $scope.list = $scope.list;
+  // });
 
-    $scope.list = response.data["data"];
-    for (var i = 0; i < $scope.list.length; i++) {
-
-      var item = $scope.list[i];
-      item.active = "0";
-      item.username = "吴志强"; //localstorage.getItem("username");
-      item.usrimg = urlService.mainservice+"imgs/logo.jpg"; //localstorage.getItem("userimg");
-
-      var array = item["datetime"].split(" ");
-      item.date = array[0];
-      item.time = array[1];
-    }
-
-    $scope.list = $scope.list;
-  });
-
-  $scope.mostlist = [{title:'1212',active:false},
-                    {title:'sadf',active:false},
-                    {title:'sadf',active:false},
-                    {title:'sadf',active:false},
-                    {title:'sadf',active:false},
-                    {title:'sadf',active:false},
-                    {title:'sadf',active:false}],
-                    {title:'sadf',active:false},
-                    {title:'sadf',active:false};
+  $scope.mostlist = [{title:'第一章',active:false},
+                    {title:'第二章',active:false},
+                    {title:'第三章',active:false},],
 
   var lastClickTag = 0;
   $scope.tagclick = function(index){
