@@ -196,4 +196,20 @@ var factorys = angular.module("factory",[])
 
   return service;
 })
+.factory("eventService", function () {
+
+    var onEventFunc = {};
+    return {
+        on: function (type, f) {
+            //事件绑定
+            onEventFunc[type] = f;
+        }, trigger: function (type, data) {
+            //触发事件
+            for (var item in onEventFunc) {
+                if (item == type)
+                    onEventFunc[item](data);
+            }
+        }
+    }
+})
 ;

@@ -50,24 +50,56 @@ var controllers = angular.module("controller",[
 })
 .controller("indexlist",function($scope,$state,urlService,netReuqest,localstorage){
 
-  //请求网络
-  netReuqest.updatedata(urlService.gettasklist,{page:"0"},function(response){
+  $scope.searchtext = "";
+  var page = 0;
 
-    $scope.list = response.data["data"];
-    for (var i = 0; i < $scope.list.length; i++) {
+  $scope.search = function(){
 
-      var item = $scope.list[i];
-      item.active = "0";
-      item.username = "吴志强"; //localstorage.getItem("username");
-      item.usrimg = urlService.mainservice+"imgs/logo.jpg"; //localstorage.getItem("userimg");
-
-      var array = item["datetime"].split(" ");
-      item.date = array[0];
-      item.time = array[1];
+    //第一次刷新
+    var filters = "where title like "+"\'"+$scope.searchtext+"\'";
+    if ($scope.searchtext == "") {
+      filters = "";
     }
+    var data = {filter:filters};
+    func(0,data);
+  };
 
-    $scope.list = $scope.list;
-  });
+  //刷新接口
+  var func = function(page,data){
+
+    data.page = page;
+
+    //请求网络
+    netReuqest.updatedata(urlService.gettasklist,data,function(response){
+
+      $scope.list = response.data["data"];
+      for (var i = 0; i < $scope.list.length; i++) {
+
+        var item = $scope.list[i];
+        item.active = "0";
+        item.username = "吴志强"; //localstorage.getItem("username");
+        item.usrimg = urlService.mainservice+"imgs/logo.jpg"; //localstorage.getItem("userimg");
+
+        var array = item["datetime"].split(" ");
+        item.date = array[0];
+        item.time = array[1];
+      }
+
+      $scope.list = $scope.list;
+    });
+  }
+
+  //第一次刷新
+  var data = {};
+  func(0,data);
+
+  // //监听刷新通知
+  // eventService.on("reloadlist", function (data) {
+  //
+  //   //第一次刷新
+  //   var data = {};
+  //   func(0,data);
+  // });
 
   //按钮点击 添加选中的颜色
   $scope.click = function(item){
@@ -398,4 +430,47 @@ var controllers = angular.module("controller",[
 
     });
   }
-});
+})
+.controller("linkview",function ($scope,netReuqest,urlService,$state) {
+
+  $scope.taglist = [{title:'html',active:false},
+                    {title:'ios',active:false},
+                    {title:'angular',active:false},
+                    {title:'php',active:false},
+                    {title:'linux',active:false},
+                    {title:'angular',active:false},
+                    {title:'angular',active:false},
+                    {title:'angular',active:false},
+                    {title:'angular',active:false},
+                    {title:'angular',active:false}];
+
+  $scope.mostlist = [{title:'1212',active:false},
+                    {title:'sadf',active:false},
+                    {title:'sadf',active:false},
+                    {title:'sadf',active:false},
+                    {title:'sadf',active:false},
+                    {title:'sadf',active:false},
+                    {title:'sadf',active:false}],
+                    {title:'sadf',active:false},
+                    {title:'sadf',active:false};
+
+  var lastClickTag = 0;
+  $scope.tagclick = function(index){
+
+    var oldObj = $scope.taglist[lastClickTag];
+    oldObj.active = false;
+
+    var obj = $scope.taglist[index];
+    obj.active = true;
+
+    lastClickTag = index;
+
+    //刷新
+    $scope.taglist = $scope.taglist;
+    //请求网络
+
+    //触发事件，通知
+     // eventService.trigger("newMess", null);
+  }
+})
+;

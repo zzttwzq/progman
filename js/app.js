@@ -49,5 +49,4 @@ var app = angular.module("app",[
     controller:'datemanager',
     cache: false,
   })
-
 });
