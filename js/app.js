@@ -8,7 +8,7 @@ var app = angular.module("app",[
   $urlRouterProvider.when("/","index");
   $stateProvider
   .state('index',{
-    url: '/index',
+    url: '',
     templateUrl: "/progman/tpls/index.html",
     controller:'indexlist',
     cache: false,
