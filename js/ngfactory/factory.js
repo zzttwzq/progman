@@ -88,26 +88,46 @@ var factorys = angular.module("factory",[])
 
   return service;
 })
-.factory("checkLoginStatue",function(localstorage){
+.factory("userManager",function(localstorage){
 
   var factory = {};
-  factory.isLogin = function (){
+  factory.getUsrInfo = function (){
 
     //判断自动登录
-    var userid = localstorage.getvalue('userid');
-    var token = localstorage.getvalue('token');
-    var username = localstorage.getvalue('usernamße');
-    var password = localstorage.getvalue('password');
-    if (username &&
-        password&&
-        token != ""&&
-        userid!= "") {
+    var usrItem = {};
+    usrItem.userid = localstorage.getvalue('userid');
+    usrItem.token = localstorage.getvalue('token');
+    usrItem.username = localstorage.getvalue('username');
+    usrItem.userimg = localstorage.getvalue('userimg');
 
-          return true;
+    if (usrItem.username &&
+        usrItem.token != ""&&
+        usrItem.userid!= ""&&
+        usrItem.userimg!= "") {
+
+          return usrItem;
     }else{
 
-      return false;
+      return null;
     }
+  }
+
+  factory.userLogin = function (userid,username,token,userimg){
+
+    //判断自动登录
+    localstorage.setvalue('userid',userid);
+    localstorage.setvalue('token',token);
+    localstorage.setvalue('username',username);
+    localstorage.setvalue('userimg',userimg);
+  }
+
+  factory.userLogout = function (userid,username,token,userimg){
+
+    //判断自动登录
+    localstorage.deletevalue('userid');
+    localstorage.deletevalue('token');
+    localstorage.deletevalue('username');
+    localstorage.deletevalue('userimg');
   }
 
   return factory;

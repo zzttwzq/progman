@@ -2,8 +2,49 @@ var controllers = angular.module("controller",[
   "factory",
   "ui.router"
 ])
-.controller("navview",function($scope,$state){
+.controller("navview",function($scope,$state,userManager,netReuqest,urlService){
 
+  //**********************************************************************
+  var usrItem = userManager.getUsrInfo();
+  $scope.usrimg = "";
+  $scope.usrname = "";
+  if (usrItem != null) {
+
+    $scope.usrimg = usrItem.usrimg;
+    $scope.usrname = usrItem.usrname;
+  }else {
+
+    $scope.usrname = "登录";
+  }
+
+  $scope.login = function (data){
+
+    //判断有没有登录
+    if (usrItem != null) {
+
+      $('#loginedView').modal('show');
+    }else {
+
+      $('#loginView').modal('show');
+    }
+  }
+
+  $scope.username = "";
+  $scope.password = "";
+  $scope.doLogin = function (){
+    //请求网络
+    netReuqest.updatedata(urlService.login,{username:$scope.username,password:$scope.password},function(response){
+
+      var usrObj = response.data['data'];
+      userManager.userLogin(usrObj.id,usrObj.name,usrObj.token,usrObj.usrimg)
+      $scope.usrimg = usrObj.usrimg;
+      $scope.usrname = usrObj.name;
+
+      $('#loginView').modal('hide');
+    });
+  }
+
+  //**********************************************************************
   $scope.list = [{name:"学习记录",img:"glyphicon glyphicon-home cellimg",active:true,page:0,url:"index"},
                 {name:"我的项目",img:"glyphicon glyphicon-book cellimg",active:false,page:1,url:"project"},
                 {name:"添加项目",img:"glyphicon glyphicon-plus-sign cellimg",active:false,page:2,url:"newproject"},
@@ -12,7 +53,7 @@ var controllers = angular.module("controller",[
                 // {name:"日程安排",img:"glyphicon glyphicon-calendar cellimg",active:"false",page:5,url:"datemanager"}
               ];
 
-  //显示日期
+  //显示当前日期
   var myDate = new Date();
   $scope.datetime = myDate.toLocaleDateString();
 
@@ -26,19 +67,25 @@ var controllers = angular.module("controller",[
 
     var obj = $scope.list[1];
     obj.active = true;
-  }else if (url.indexOf("newproject") != -1) {
+  }
+
+  else if (url.indexOf("newproject") != -1) {
 
     var obj = $scope.list[2];
     obj.active = true;
-  }else if (url.indexOf("note") != -1) {
+  }
+  else if (url.indexOf("note") != -1) {
 
     var obj = $scope.list[3];
     obj.active = true;
-  }else if (url.indexOf("notelist") != -1) {
+  }
+  else if (url.indexOf("notelist") != -1) {
 
     var obj = $scope.list[4];
     obj.active = true;
   }
+
+  //**********************************************************************
 
   //按钮点击 添加选中的颜色
   var lastclick = 0;
