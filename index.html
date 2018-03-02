@@ -89,38 +89,6 @@
         <!-- 显示当前日期 -->
         <p class="datetime">{{datetime}}</p>
         <!-- 显示当前日期 -->
-
-        <!-- 模态框（Modal） -->
-        <div class="modal fade" id="loginView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">登录</h4>
-                    </div>
-
-                    <div class="modal-body">
-                      <div class="input-group">
-                          <span class="input-group-addon">用户名</span>
-                          <input type="text" class="form-control" ng-model="username">
-                      </div>
-
-                      <div class="" style="margin-top:15px;"></div>
-
-                      <div class="input-group">
-                          <span class="input-group-addon">密码</span>
-                          <input type="text" class="form-control" ng-model="password">
-                      </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary" ng-click="doLogin()">登录</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
       </div>
       <!-- 左侧导航界面 -->
 
@@ -131,6 +99,38 @@
       <!-- 清除浮动 -->
       <div class="clearfix"></div>
       <!-- 清除浮动 -->
+    </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="loginView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">登录</h4>
+                </div>
+
+                <div class="modal-body">
+                  <div class="input-group">
+                      <span class="input-group-addon">用户名</span>
+                      <input type="text" class="form-control" ng-model="username">
+                  </div>
+
+                  <div class="" style="margin-top:15px;"></div>
+
+                  <div class="input-group">
+                      <span class="input-group-addon">密码</span>
+                      <input type="text" class="form-control" ng-model="password">
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" ng-click="doLogin()">登录</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
     </div>
   </body>
 </html>
