@@ -5,12 +5,12 @@ var app = angular.module("app",[
   "directive"
 ])
 .config(function($stateProvider,$urlRouterProvider){
-  $urlRouterProvider.when("/","index");
+  $urlRouterProvider.when("/","/learnlist");
   $stateProvider
-  .state('index',{
-    url: '',
+  .state('learnlist',{
+    url: '/learnlist',
     templateUrl: "/progman/tpls/index.html",
-    controller:'indexlist',
+    controller:'learnlist',
     cache: false,
   })
   .state('project',{

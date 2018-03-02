@@ -10,8 +10,8 @@ var controllers = angular.module("controller",[
   $scope.usrname = "";
   if (usrItem != null) {
 
-    $scope.usrimg = usrItem.usrimg;
-    $scope.usrname = usrItem.usrname;
+    $scope.usrimg = usrItem.userimg;
+    $scope.usrname = usrItem.username;
   }else {
 
     $scope.usrname = "登录";
@@ -45,7 +45,7 @@ var controllers = angular.module("controller",[
   }
 
   //**********************************************************************
-  $scope.list = [{name:"学习记录",img:"glyphicon glyphicon-home cellimg",active:true,page:0,url:"index"},
+  $scope.list = [{name:"学习记录",img:"glyphicon glyphicon-home cellimg",active:true,page:0,url:"learnlist"},
                 {name:"我的项目",img:"glyphicon glyphicon-book cellimg",active:false,page:1,url:"project"},
                 {name:"添加项目",img:"glyphicon glyphicon-plus-sign cellimg",active:false,page:2,url:"newproject"},
                 {name:"随身笔记",img:"glyphicon glyphicon-edit cellimg",active:false,page:3,url:"note"},
@@ -59,16 +59,26 @@ var controllers = angular.module("controller",[
 
   //获取当前url判断列表显示的位置
   var url = window.location.href;
-  if (url.indexOf("index") == -1) {
+  if (url.indexOf("learnlist") == -1) {
     var obj = $scope.list[0];
     obj.active = false;
   }
+
+  //确保进入首页
+  if (url.indexOf("http://localhost/progman/")||
+      url.indexOf("http://localhost/progman/learnlist")) {
+    var obj = $scope.list[0];
+    obj.active = true;
+
+    //进入首页
+    $state.go(obj.url);
+  }
+
   if (url.indexOf("project") != -1) {
 
     var obj = $scope.list[1];
     obj.active = true;
   }
-
   else if (url.indexOf("newproject") != -1) {
 
     var obj = $scope.list[2];
@@ -118,7 +128,7 @@ var controllers = angular.module("controller",[
     $scope.list = $scope.list;
   }
 })
-.controller("indexlist",function($scope,$state,urlService,netReuqest,localstorage,getlistservice){
+.controller("learnlist",function($scope,$state,urlService,netReuqest,localstorage,getlistservice){
 
   var page = 0;
   var filter = "";
@@ -216,12 +226,6 @@ var controllers = angular.module("controller",[
 })
 .controller("note",function($scope,$state,urlService,netReuqest){
 
-  $scope.title = "";
-  $scope.brief = "";
-  $scope.tag = "";
-  $scope.text = "";
-  $scope.category = "";
-
   var itemid = window.location.href.split("?");
 
   //判断是否有id
@@ -238,6 +242,7 @@ var controllers = angular.module("controller",[
       $scope.tag = obj.tag;
       $scope.text = obj.text;
       $scope.id = obj.id;
+      $scope.category = obj.category;
     });
   }
 
@@ -388,7 +393,6 @@ var controllers = angular.module("controller",[
     //默认进入首页
     window.location.href = urlService.mainservice+"#!/note?id="+item.id;
   }
-
 
   //获取数据
   $scope.clickpage = function (item){

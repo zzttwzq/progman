@@ -148,7 +148,14 @@ var factorys = angular.module("factory",[])
       //列表数据
       for (var i = 0; i < response.data.data.length; i++) {
 
-        list.push(response.data.data[i]);
+        var cellItem = response.data.data[i];
+
+        var array1 = cellItem.datetime.split(" ");
+        var array2 = array1[0].split("-");
+
+        cellItem.year = array2[0];
+        cellItem.month = array2[1]+"月"+array2[2]+"日";
+        list.push(cellItem);
       }
 
       //分页数组
