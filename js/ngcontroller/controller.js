@@ -181,7 +181,7 @@ var controllers = angular.module("controller",[
     item.active = 2;
     $scope.list = $scope.list;
 
-    //默认进入首页
+    //进入详情页面
     window.location.href = urlService.mainservice+"#!/detial?id="+item.id;
   }
 
@@ -226,13 +226,13 @@ var controllers = angular.module("controller",[
 })
 .controller("note",function($scope,$state,urlService,netReuqest){
 
-  var itemid = window.location.href.split("?");
+  //===============网络请求功能===============
+  var itemArray = window.location.href.split("?");
+  if (itemArray.length > 1) {
 
-  //判断是否有id
-  if (itemid.length > 1) {
-
+    var itemID = itemArray[1].split("=")[1];
     //请求网络
-    netReuqest.updatedata(urlService.gettasklist,{page:"0",filter:"where "+itemid[1]},function(response){
+    netReuqest.updatedata(urlService.gettasklist,{page:"0",filter:"where "+'id = '+itemID},function(response){
 
       var array = response.data["data"];
       var obj = array[0];
@@ -241,12 +241,17 @@ var controllers = angular.module("controller",[
       $scope.brief = obj.brief;
       $scope.tag = obj.tag;
       $scope.text = obj.text;
-      $scope.id = obj.id;
       $scope.category = obj.category;
     });
+
+    //查看文章
+    $scope.see = function (){
+
+      window.location.href = urlService.mainservice+"#!/detial?id="+itemID;
+    }
   }
 
-  //========================保存===================
+  //增加和保存操作
   $scope.save = function (item){
 
     var obj = {};
@@ -256,28 +261,33 @@ var controllers = angular.module("controller",[
     obj.text = $scope.text;
     obj.category = $scope.category;
 
-    //判断是否有id
-    if (itemid.length == 1) { //增加
-
-      //请求网络
+    //增加
+    if (itemArray.length == 1) {
       netReuqest.updatedata(urlService.addtasklist,obj,function(response){
 
         alert(response.data["msg"]);
-        if (response.data["result"]) {
+        if (response.data["result"] == 1) {
 
+          $scope.title = "";
+          $scope.brief = "";
+          $scope.tag = "";
+          $scope.text = "";
+          $scope.category = "";
         }
       });
     }
-    else { //修改
+    //修改
+    else {
 
-      obj.id = $scope.id;
-
-      //请求网络
+      var itemID = itemArray[1].split("=")[1];
+      obj.id = itemID;
       netReuqest.updatedata(urlService.updatetasklist,obj,function(response){
 
         alert(response.data["msg"]);
-        if (response.data["result"]) {
+        if (response.data["result"] == 1) {
 
+          //进入详情页面
+          window.location.href = urlService.mainservice+"#!/detial?id="+obj.id;
         }
       });
     }
@@ -311,11 +321,6 @@ var controllers = angular.module("controller",[
 
     $state.go("pageman");
   };
-  //查看文章
-  $scope.see = function (){
-
-    window.location.href = urlService.pagedetial+"?id="+id;
-  }
 })
 .controller("detial",function($scope,netReuqest,urlService){
 
