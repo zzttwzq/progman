@@ -65,8 +65,8 @@ var controllers = angular.module("controller",[
   }
 
   //确保进入首页
-  if (url.indexOf("http://localhost/progman/")||
-      url.indexOf("http://localhost/progman/learnlist")) {
+  if (url.indexOf(urlService.mainservice)||
+      url.indexOf(urlService.mainservice+"learnlist")) {
     var obj = $scope.list[0];
     obj.active = true;
 
