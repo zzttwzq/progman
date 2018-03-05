@@ -255,6 +255,10 @@ var controllers = angular.module("controller",[
   $scope.save = function (item){
 
     var obj = {};
+
+    var array = $scope.text.split("'");
+    $scope.text = array.join("\\'");
+
     obj.title = $scope.title;
     obj.brief = $scope.brief;
     obj.tag = $scope.tag;
