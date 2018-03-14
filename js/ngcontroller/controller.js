@@ -12,9 +12,18 @@ var controllers = angular.module("controller",[
 
     $scope.usrimg = usrItem.userimg;
     $scope.usrname = usrItem.username;
+
+    $scope.list = [{name:"学习记录",img:"glyphicon glyphicon-home cellimg",active:true,page:0,url:"learnlist"},
+                  {name:"我的项目",img:"glyphicon glyphicon-book cellimg",active:false,page:1,url:"project"},
+                  {name:"添加项目",img:"glyphicon glyphicon-plus-sign cellimg",active:false,page:2,url:"newproject"},
+                  {name:"随身笔记",img:"glyphicon glyphicon-edit cellimg",active:false,page:3,url:"note"},
+                  {name:"笔记管理",img:"glyphicon glyphicon-th-list cellimg",active:false,page:4,url:"notelist"},
+                  // {name:"日程安排",img:"glyphicon glyphicon-calendar cellimg",active:"false",page:5,url:"datemanager"}
+                ];
   }else {
 
     $scope.usrname = "登录";
+    $scope.list = [{name:"学习记录",img:"glyphicon glyphicon-home cellimg",active:true,page:0,url:"learnlist"}];
   }
 
   $scope.login = function (data){
@@ -35,24 +44,18 @@ var controllers = angular.module("controller",[
     //请求网络
     netReuqest.updatedata(urlService.login,{username:$scope.username,password:$scope.password},function(response){
 
-      var usrObj = response.data['data'];
-      userManager.userLogin(usrObj.id,usrObj.name,usrObj.token,usrObj.usrimg)
-      $scope.usrimg = usrObj.usrimg;
-      $scope.usrname = usrObj.name;
+      // var usrObj = response.data['data'];
+      // userManager.userLogin(usrObj.id,usrObj.name,usrObj.token,usrObj.usrimg)
+      // $scope.usrimg = usrObj.usrimg;
+      // $scope.usrname = usrObj.name;
 
-      $('#loginView').modal('hide');
+      // $('#loginView').modal('hide');
+
+      window.location.href = window.location.href;
     });
   }
 
   //**********************************************************************
-  $scope.list = [{name:"学习记录",img:"glyphicon glyphicon-home cellimg",active:true,page:0,url:"learnlist"},
-                {name:"我的项目",img:"glyphicon glyphicon-book cellimg",active:false,page:1,url:"project"},
-                {name:"添加项目",img:"glyphicon glyphicon-plus-sign cellimg",active:false,page:2,url:"newproject"},
-                {name:"随身笔记",img:"glyphicon glyphicon-edit cellimg",active:false,page:3,url:"note"},
-                {name:"笔记管理",img:"glyphicon glyphicon-th-list cellimg",active:false,page:4,url:"notelist"},
-                // {name:"日程安排",img:"glyphicon glyphicon-calendar cellimg",active:"false",page:5,url:"datemanager"}
-              ];
-
   //显示当前日期
   var myDate = new Date();
   $scope.datetime = myDate.toLocaleDateString();
