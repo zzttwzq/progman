@@ -29,13 +29,14 @@ var controllers = angular.module("controller",[
   $scope.login = function (data){
 
     //判断有没有登录
-    if (usrItem != null) {
-
-      $('#loginedView').modal('show');
-    }else {
-
-      $('#loginView').modal('show');
-    }
+    $('#loginView').modal('show');
+    // if (usrItem != null) {
+    //
+    //   $('#loginedView').modal('show');
+    // }else {
+    //
+    //   $('#loginView').modal('show');
+    // }
   }
 
   $scope.username = "";
