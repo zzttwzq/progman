@@ -44,6 +44,13 @@ var controllers = angular.module("controller",[
     //请求网络
     netReuqest.updatedata(urlService.login,{username:$scope.username,password:$scope.password},function(response){
 
+      var usrObj = response.data['data'];
+      userManager.userLogin(usrObj.id,usrObj.name,usrObj.token,usrObj.usrimg)
+      // $scope.usrimg = usrObj.usrimg;
+      // $scope.usrname = usrObj.name;
+
+      // $('#loginView').modal('hide');
+
       window.location.reload(true);
     });
   }
