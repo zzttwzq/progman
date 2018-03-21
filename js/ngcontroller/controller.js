@@ -29,14 +29,13 @@ var controllers = angular.module("controller",[
   $scope.login = function (data){
 
     //判断有没有登录
-    $('#loginView').modal('show');
-    // if (usrItem != null) {
-    //
-    //   $('#loginedView').modal('show');
-    // }else {
-    //
-    //   $('#loginView').modal('show');
-    // }
+    if (usrItem != null) {
+
+      $('#loginedView').modal('show');
+    }else {
+
+      $('#loginView').modal('show');
+    }
   }
 
   $scope.username = "";
@@ -47,11 +46,6 @@ var controllers = angular.module("controller",[
 
       var usrObj = response.data['data'];
       userManager.userLogin(usrObj.id,usrObj.name,usrObj.token,usrObj.usrimg)
-      // $scope.usrimg = usrObj.usrimg;
-      // $scope.usrname = usrObj.name;
-
-      // $('#loginView').modal('hide');
-
       window.location.reload(true);
     });
   }
