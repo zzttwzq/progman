@@ -8,6 +8,8 @@ var controllers = angular.module("controller",[
   var usrItem = userManager.getUsrInfo();
   $scope.usrimg = "";
   $scope.usrname = "";
+  $scope.username = "";
+  $scope.password = "";
   if (usrItem != null) {
 
     $scope.usrimg = usrItem.userimg;
@@ -27,26 +29,57 @@ var controllers = angular.module("controller",[
 
   $scope.login = function (data){
 
-    //判断有没有登录
+    //判断用户不为空
     if (usrItem != null) {
 
       $('#loginedView').modal('show');
-    }else {
+
+
+      //保存用户信息
+      $scope.doSave = function (){
+        netReuqest.updatedata(urlService.saveuser,{username:$scope.username,password:$scope.password},function(response){
+
+          var usrObj = response.data['data'];
+          userManager.userLogin(usrObj.id,usrObj.name,usrObj.token,usrObj.usrimg)
+          window.location.reload(true);
+        });
+      }
+
+      //登出请求
+      $scope.doLogout = function (){
+        netReuqest.updatedata(urlService.logout,{userid:usrItem.userid},function(response){
+
+          userManager.userLogout()
+          window.location.reload(true);
+        });
+      }
+    }
+    //判断用户为空
+    else{
 
       $('#loginView').modal('show');
+
+
+      //注册请求
+      $scope.doRegister = function (){
+        netReuqest.updatedata(urlService.adduser,{username:$scope.username,password:$scope.password},function(response){
+
+          var usrObj = response.data['data'];
+          userManager.userLogin(usrObj.id,usrObj.name,usrObj.token,usrObj.usrimg)
+          window.location.reload(true);
+        });
+      }
+
+      //登录请求
+      $scope.doLogin = function (){
+        netReuqest.updatedata(urlService.login,{username:$scope.username,password:$scope.password},function(response){
+
+          var usrObj = response.data['data'];
+          userManager.userLogin(usrObj.id,usrObj.name,usrObj.token,usrObj.usrimg)
+          window.location.reload(true);
+        });
+      }
     }
-  }
-
-  $scope.username = "";
-  $scope.password = "";
-  $scope.doLogin = function (){
-    //请求网络
-    netReuqest.updatedata(urlService.login,{username:$scope.username,password:$scope.password},function(response){
-
-      var usrObj = response.data['data'];
-      userManager.userLogin(usrObj.id,usrObj.name,usrObj.token,usrObj.usrimg)
-      window.location.reload(true);
-    });
   }
 
   //**********************************************************************

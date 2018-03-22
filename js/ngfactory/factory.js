@@ -26,11 +26,12 @@ var factorys = angular.module("factory",[])
 })
 .factory('urlService', function() {
   var service = {
-    mainservice:"http://120.78.131.83/progman/",
+    mainservice:"http://localhost/progman/",
 
-    adduser:"/myphp/business/login_register/login_register.php?action=add",
+    adduser:"/myphp/business/progman/login.php?action=adduser",
+    saveuser:"/myphp/business/progman/login.php?action=saveuser",
     login:"/myphp/business/progman/login.php?action=login",
-    logout:"/myphp/business/login_register/login_register.php?action=logout",
+    logout:"/myphp/business/progman/login.php?action=logout",
 
     gettasklist:"/myphp/business/progman/project.php?action=getTaskList",
     addtasklist:"/myphp/business/progman/project.php?action=addTaskList",
@@ -121,7 +122,7 @@ var factorys = angular.module("factory",[])
     localstorage.setvalue('userimg',userimg);
   }
 
-  factory.userLogout = function (userid,username,token,userimg){
+  factory.userLogout = function (){
 
     //判断自动登录
     localstorage.deletevalue('userid');
