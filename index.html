@@ -14,10 +14,10 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
 
     <!-- icon图标 -->
-    <link rel="icon" href="http://localhost/progman/imgs/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="http://120.78.131.83/progman/imgs/favicon.ico" type="image/x-icon">
 
     <!-- 引入自己的主题 -->
-    <link rel="stylesheet" href="http://localhost/progman/css/theme.css">
+    <link rel="stylesheet" href="http://120.78.131.83/progman/css/theme.css">
 
     <!-- 引入动画库 -->
     <link rel="stylesheet" href="http://apps.bdimg.com/libs/animate.css/3.1.0/animate.min.css">
@@ -33,16 +33,16 @@
     <script src="https://cdn.bootcss.com/angular.js/1.6.6/angular.min.js"></script>
 
     <!-- chartjs -->
-    <!-- <script src="http://localhost/progman/lib/Chart.min.js"></script> -->
+    <!-- <script src="http://120.78.131.83/progman/lib/Chart.min.js"></script> -->
 
     <!-- ui.route -->
     <script src="https://cdn.bootcss.com/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
 
     <!-- 自己的js -->
-    <script src='http://localhost/progman/js/ngfactory/factory.js' charset='utf-8'></script>
-    <script src='http://localhost/progman/js/ngdirective/directive.js' charset='utf-8'></script>
-    <script src='http://localhost/progman/js/ngcontroller/controller.js' charset='utf-8'></script>
-    <script src='http://localhost/progman/js/app.js' charset='utf-8'></script>
+    <script src='http://120.78.131.83/progman/js/ngfactory/factory.js' charset='utf-8'></script>
+    <script src='http://120.78.131.83/progman/js/ngdirective/directive.js' charset='utf-8'></script>
+    <script src='http://120.78.131.83/progman/js/ngcontroller/controller.js' charset='utf-8'></script>
+    <script src='http://120.78.131.83/progman/js/app.js' charset='utf-8'></script>
   </head>
   <body ng-app="app" ng-controller="navview">
     <div class="page">
@@ -101,7 +101,7 @@
       <!-- 清除浮动 -->
     </div>
 
-    <!-- 模态框（Modal） -->
+    <!-- 登录框 -->
     <div class="modal fade" id="loginView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -131,6 +131,28 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
+    </div>
+
+    <!-- 上传图片 -->
+    <div class="modal fade" style="z-index: 9999" id="uploadimgs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">上传图片</h4>
+                </div>
+
+                <div class="modal-body">
+                  <form action="../../myphp/business/progman/project.php?action=uploadimg" method="post" enctype="multipart/form-data">
+                  <label for="file">Filename:</label>
+                  <input type="file" name="file" id="file" />
+                  <br />
+                  <input type="submit" name="submit" value="Submit" />
+                  </form>
+                </div>
+            </div>
+        </div>
     </div>
   </body>
 </html>

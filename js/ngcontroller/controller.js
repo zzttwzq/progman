@@ -18,7 +18,6 @@ var controllers = angular.module("controller",[
                   {name:"添加项目",img:"glyphicon glyphicon-plus-sign cellimg",active:false,page:2,url:"newproject"},
                   {name:"随身笔记",img:"glyphicon glyphicon-edit cellimg",active:false,page:3,url:"note"},
                   {name:"笔记管理",img:"glyphicon glyphicon-th-list cellimg",active:false,page:4,url:"notelist"},
-                  // {name:"日程安排",img:"glyphicon glyphicon-calendar cellimg",active:"false",page:5,url:"datemanager"}
                 ];
   }else {
 
@@ -75,22 +74,50 @@ var controllers = angular.module("controller",[
   if (url.indexOf("project") != -1) {
 
     var obj = $scope.list[1];
-    obj.active = true;
+    if (obj == null) {
+
+      //进入首页
+      $state.go("learnlist");
+    }else {
+
+      obj.active = true;
+    }
   }
   else if (url.indexOf("newproject") != -1) {
 
     var obj = $scope.list[2];
-    obj.active = true;
+    if (obj == null) {
+
+      //进入首页
+      $state.go("learnlist");
+    }else {
+
+      obj.active = true;
+    }
   }
   else if (url.indexOf("note") != -1) {
 
     var obj = $scope.list[3];
-    obj.active = true;
+    if (obj == null) {
+
+      //进入首页
+      $state.go("learnlist");
+    }else {
+
+      obj.active = true;
+    }
   }
   else if (url.indexOf("notelist") != -1) {
 
     var obj = $scope.list[4];
-    obj.active = true;
+    if (obj == null) {
+
+      //进入首页
+      $state.go("learnlist");
+    }else {
+
+      obj.active = true;
+    }
   }
 
   //**********************************************************************
@@ -314,7 +341,8 @@ var controllers = angular.module("controller",[
   //添加图片
   $scope.img = function (){
 
-    $scope.text = $scope.text+"\n[img] [end]";
+    $('#uploadimgs').modal('show');
+    // $scope.text = $scope.text+"\n[img] [end]";
   };
 
   //===============下面的功能===============
