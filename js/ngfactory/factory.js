@@ -26,20 +26,25 @@ var factorys = angular.module("factory",[])
 })
 .factory('urlService', function() {
   var service = {
-    mainservice:"http://127.78.131.83/progman/",
+    mainservice:"http://localhost/progman/",
 
     adduser:"/myphp/business/progman/login.php?action=adduser",
     saveuser:"/myphp/business/progman/login.php?action=saveuser",
     login:"/myphp/business/progman/login.php?action=login",
     logout:"/myphp/business/progman/login.php?action=logout",
 
-    gettasklist:"/myphp/business/progman/project.php?action=getTaskList",
-    addtasklist:"/myphp/business/progman/project.php?action=addTaskList",
-    deletetasklist:"/myphp/business/progman/project.php?action=deleteTaskList",
-    updatetasklist:"/myphp/business/progman/project.php?action=updateTaskList",
+    addscorelist:"/myphp/business/progman/learning.php?action=addScoreList",
+    getscorelist:"/myphp/business/progman/learning.php?action=getScoreList",
 
-    addscorelist:"/myphp/business/progman/project.php?action=addScoreList",
-    getscorelist:"/myphp/business/progman/project.php?action=getScoreList",
+    gettasklist:"/myphp/business/progman/learning.php?action=getTaskList",
+    addtasklist:"/myphp/business/progman/learning.php?action=addTaskList",
+    deletetasklist:"/myphp/business/progman/learning.php?action=deleteTaskList",
+    updatetasklist:"/myphp/business/progman/learning.php?action=updateTaskList",
+
+    getProjectList:"/myphp/business/progman/project.php?action=getProjectList",
+    addProject:"/myphp/business/progman/project.php?action=addProject",
+    deleteProject:"/myphp/business/progman/project.php?action=deleteProject",
+    udpateProject:"/myphp/business/progman/project.php?action=udpateProject",
   };
   return service;
 })
@@ -133,7 +138,7 @@ var factorys = angular.module("factory",[])
 
   return factory;
 })
-.factory("getlistservice",function(netReuqest,localstorage){
+.factory("getlistservice",function(netReuqest,localstorage,userManager){
 
   var service = {};
   service.getlist = function (list,listpage,url,page,filter){
@@ -156,6 +161,12 @@ var factorys = angular.module("factory",[])
 
         cellItem.year = array2[0];
         cellItem.month = array2[1]+"月"+array2[2]+"日";
+
+        var usrItem = userManager.getUsrInfo();
+        if (usrItem) {
+          cellItem.usrimg = usrItem.userimg;
+        }
+
         list.push(cellItem);
       }
 
@@ -221,6 +232,15 @@ var factorys = angular.module("factory",[])
 
   return service;
 })
+.factory("initLib",function(){
+
+    var service = {};
+    service.startConfig = function (){
+
+      alert('asdf');
+    };
+    return service;
+})
 .factory("eventService", function () {
 
     var onEventFunc = {};
@@ -228,7 +248,8 @@ var factorys = angular.module("factory",[])
         on: function (type, f) {
             //事件绑定
             onEventFunc[type] = f;
-        }, trigger: function (type, data) {
+        },
+        trigger: function (type, data) {
             //触发事件
             for (var item in onEventFunc) {
                 if (item == type)
@@ -236,5 +257,4 @@ var factorys = angular.module("factory",[])
             }
         }
     }
-})
-;
+});

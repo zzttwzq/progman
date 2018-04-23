@@ -4,6 +4,8 @@ var controllers = angular.module("controller",[
 ])
 .controller("navview",function($scope,$state,userManager,netReuqest,urlService){
 
+  // initLib.startConfig();
+
   //**********************************************************************
   var usrItem = userManager.getUsrInfo();
   $scope.usrimg = "";
@@ -186,7 +188,7 @@ var controllers = angular.module("controller",[
     $scope.list = $scope.list;
   }
 })
-.controller("learnlist",function($scope,$state,urlService,netReuqest,localstorage,getlistservice){
+.controller("learnlist",function($scope,$state,urlService,eventService,netReuqest,localstorage,getlistservice){
 
   var page = 0;
   var filter = "";
@@ -203,7 +205,6 @@ var controllers = angular.module("controller",[
 
   //第一次数据
   $scope.clickpage({page:page,active:true});
-
   //上一个
   $scope.prevois = function (){
 
@@ -219,20 +220,22 @@ var controllers = angular.module("controller",[
   $scope.search = function(){
 
     //第一次刷新
-    filter = "where title like "+"\'"+$scope.searchtext+"\'";
+    filter = $scope.searchtext;
     if ($scope.searchtext == "") {
       filter = "";
     }
     $scope.clickpage({page:page,active:true});
   };
 
-  // //监听刷新通知
-  // eventService.on("reloadlist", function (data) {
-  //
-  //   //第一次刷新
-  //   var data = {};
-  //   func(0,data);
-  // });
+  //监听刷新通知
+  eventService.on("reloadlist", function (data) {
+
+    //第一次刷新
+    $scope.searchtext
+
+    filter = data;
+    $scope.clickpage({page:page,active:true});
+  });
 
   //按钮点击 添加选中的颜色
   $scope.click = function(item){
@@ -278,9 +281,169 @@ var controllers = angular.module("controller",[
 
 
 })
-.controller("newproject",function($scope){
+.controller("newproject",function($scope,$state,urlService,netReuqest){
 
+  Array.prototype.indexOf = function(val) {
+    for (var i = 0; i < this.length; i++) {
+      if (this[i] == val) return i;
+    }
+    return -1;
+  };
 
+  Array.prototype.remove = function(val) {
+    var index = this.indexOf(val);
+    if (index > -1) {
+      this.splice(index, 1);
+    }
+  };
+
+  $scope.day = [];
+  $scope.hour = [];
+  $scope.minites = [];
+  var selectItem = {};
+  for (var i = 0; i < 60; i++) {
+
+    if (i <= 30) {
+      $scope.day.push(i);
+    }
+
+    if (i <= 12) {
+      $scope.hour.push(i);
+    }
+
+    $scope.minites.push(i);
+  }
+
+  $scope.levellist = [
+    {title:"第一章",
+      timer:"30s",
+      subitems:[{
+        title:"第一节",
+        timer:"10s",
+        message:"生命的活力"
+      },
+      {
+        title:"第二节",
+        timer:"20s",
+        message:"扩胸运动"
+      },
+      {
+        title:"第三节",
+        timer:"30s",
+        message:"伸展运动"
+      }]
+    },
+
+    {title:"第二章",
+      timer:"30s",
+      subitems:[{
+        timer:"15s",
+        title:"第二节",
+        message:"生命的活力"
+      },
+      {
+        timer:"30s",
+        title:"第二节",
+        message:"生命的活力"
+      }]
+    },
+
+    {title:"第三章",
+     timer:"15s",
+     subitems:[{
+        timer:"15s",
+        title:"第三节",
+        message:"生命的活力"
+     }]
+    },
+  ];
+
+  $scope.showTime = function(item){
+
+    // selectItem = item;
+    // $("#timer").modal('show');
+
+    var string = JSON.stringify($scope.levellist);
+    var obj = JSON.parse(string);
+    alert(obj);
+  };
+
+  $scope.choseTime = function () {
+
+    selectItem.timer = time;
+    $scope.levellist = $scope.levellist;
+
+    if (item.subitems == undefined) {
+
+    }else {
+
+      // var count = 0;
+      // for (var obj in item.subitems) {
+      //   count += obj.
+      // }
+    }
+  };
+
+  $scope.commit = function (){
+
+    if(confirm("是否确定保存？")){
+
+      var obj = {
+        title:$scope.title,
+        tag:$scope.category,
+        list:JSON.stringify($scope.levellist)
+      }
+
+      netReuqest.updatedata(urlService.saveuser,obj,function(response){
+
+        var usrObj = response.data['data'];
+        userManager.userLogin(usrObj.id,usrObj.name,usrObj.token,usrObj.usrimg)
+        window.location.reload(true);
+      });
+
+    }else{
+
+      alert("取消保存！");
+    }
+  }
+
+  $scope.addlevel = function (item) {
+
+    // 增加章节
+    if (item == null) {
+
+      var obj = {
+        title:"我是新加的标题",
+        timer:"5m",
+        subitems:[],
+      };
+      $scope.levellist.push(obj);
+    }
+    // 增加子标题
+    else {
+
+      var obj = {
+        title:"我是新加的标题",
+        timer:"5m",
+        subitems:[],
+      };
+      item.subitems.push(obj);
+
+      $scope.levellist = $scope.levellist;
+    }
+  };
+
+  $scope.deleteItem = function (item,subitem) {
+
+    if (subitem == null) {
+
+      $scope.levellist.remove(item);
+    }else {
+
+      item.subitems.remove(subitem);
+      $scope.levellist = $scope.levellist;
+    }
+  };
 })
 .controller("note",function($scope,$state,urlService,netReuqest){
 
@@ -288,9 +451,8 @@ var controllers = angular.module("controller",[
   var itemArray = window.location.href.split("?");
   if (itemArray.length > 1) {
 
-    var itemID = itemArray[1].split("=")[1];
     //请求网络
-    netReuqest.updatedata(urlService.gettasklist,{page:"0",filter:"where "+'id = '+itemID},function(response){
+    netReuqest.updatedata(urlService.gettasklist,{page:"0",id:itemArray[1]},function(response){
 
       var array = response.data["data"];
       var obj = array[0];
@@ -390,7 +552,7 @@ var controllers = angular.module("controller",[
   $scope.data = {"title":"asdf"};
   var itemid = window.location.href.split("?");
   //请求网络
-  netReuqest.updatedata(urlService.gettasklist,{page:"0",filter:"where "+itemid[1]},function(response){
+  netReuqest.updatedata(urlService.gettasklist,{page:"0",id:itemid[1]},function(response){
 
     $scope.data = response.data["data"][0];
 
@@ -584,7 +746,7 @@ var controllers = angular.module("controller",[
     });
   }
 })
-.controller("linkview",function ($scope,netReuqest,urlService,$state) {
+.controller("linkview",function ($scope,netReuqest,urlService,$state,eventService) {
 
   $scope.taglist = [{title:'html',active:false},
                     {title:'ios',active:false},
@@ -592,7 +754,9 @@ var controllers = angular.module("controller",[
                     {title:'php',active:false},
                     {title:'linux',active:false},
                     {title:'vue',active:false},
-                    {title:'rtmp',active:false},];
+                    {title:'rtmp',active:false},
+                    {title:'java',active:false},
+                    {title:'swift',active:false},];
 
   // //请求网络
   // netReuqest.updatedata(urlService.gettasklist,data,function(response){
@@ -630,9 +794,9 @@ var controllers = angular.module("controller",[
 
     //刷新
     $scope.taglist = $scope.taglist;
+
     //请求网络
-
-
+    eventService.trigger('reloadlist',obj.title);
   }
 })
 ;

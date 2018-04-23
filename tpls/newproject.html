@@ -8,27 +8,188 @@
     border-radius: 10px;
     width: 85%;
     float: left;
-    margin-bottom: 60px;
     overflow: hidden;
   }
-  /*cell*/
-  .listcellimg{
-    width: 100px;
-    height: 100px;
-    background: red;
+  .addBtn{
+    margin-top: -60px;
+    margin-right: 125px;
+    float: right;
+  }
+
+  /* 页面内容 */
+  .viewcontent{
+    margin:30px 30px;
+    margin-bottom: 10px;
+  }
+  .inputTitle{
+    float: left;
+    line-height: 30px;
+    margin-right: 20px;
+  }
+  .inputText{
+    width: 90%;
+    float: left;
+  }
+  .sepLine{
+    width:100%;
+    height:2px;
+    background:#dddddd;
+  }
+
+  /* 章节列表 */
+  .levelCell{
+    width: 100%;
+  }
+  .subLevelCell
+  {
+    margin-left: 5%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 95%;
+  }
+  .choseBtn{
+    cursor: pointer;
+  }
+  .timer{
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+  }
+  .delete{
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
   }
 </style>
 
 <div class="main animated fadeInRight">
-
-  <h2 class="titles">添加项目</h2>
-
   <div class="">
-    <div class="listview">
+    <h2 class="titles">添加项目</h2>
 
-      <div class="indexlistcell">
+    <button type="button" class="btn btn-success addBtn" ng-click="commit()">
+      <span class="glyphicon glyphicon-ok"></span>完成
+    </button>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="listview">
+    <div class="viewcontent">
+
+      <!-- 标题和分类部分 -->
+      <div class="group">
+        <span class="inputTitle">标题</span>
+        <input type="text" class="form-control inputText" placeholder="请输入文章标题(必须)" ng-model="title">
+      </div>
+      <div class="clearfix"></div>
+      <div class="" style="width:100%;height:10px;"></div>
+      <!-- 标题和简介部分 -->
+
+      <!-- 标签部分 -->
+      <div class="group">
+        <span class="inputTitle">标签</span>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle"
+              data-toggle="dropdown">
+            默认 <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">功能</a></li>
+            <li><a href="#">另一个功能</a></li>
+            <li><a href="#">其他</a></li>
+            <li class="divider"></li>
+            <li><a href="#">分离的链接</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="" style="width:100%;height:15px;"></div>
+      <!-- 标签部分 -->
+
+    </div>
+
+    <div class="sepLine"></div>
+
+    <div class="viewcontent">
+      <h3>添加章节</h3>
+
+      <!-- 章节添加视图 -->
+      <div class="levelCell" ng-repeat="item in levellist">
+
+        <!-- 大标题 -->
+        <div class="input-group">
+          <span class="input-group-addon">大标题</span>
+          <input type="text" class="form-control" ng-model="item.title">
+          <span class="input-group-addon choseBtn timer" ng-click="showTime(item)"><span class="	glyphicon glyphicon-time"></span>{{item.timer}}</span>
+          <span class="input-group-addon choseBtn delete" ng-click="deleteItem(item,null)"><span class="	glyphicon glyphicon-minus"></span></span>
+        </div>
+        <!-- 大标题 -->
+
+        <!-- 子标题 -->
+        <div class="subLevelCell" ng-repeat="subitem in item.subitems">
+
+          <!-- 子标题 -->
+          <div class="input-group">
+            <span class="input-group-addon">子标题</span>
+            <input type="text" class="form-control" ng-model="subitem.title">
+            <span class="input-group-addon choseBtn timer" ng-click="showTime(subitem)"><span class="	glyphicon glyphicon-time"></span>{{subitem.timer}}</span>
+            <span class="input-group-addon choseBtn delete" ng-click="deleteItem(item,subitem)"><span class="	glyphicon glyphicon-minus"></span></span>
+          </div>
+          <!-- 子标题 -->
+        </div>
+        <!-- 子标题 -->
+
+        <!-- 添加按钮 -->
+        <button type="button" class="btn btn-success btn-block" ng-click="addlevel(item)" style="margin-top:15px;margin-bottom:15px;margin-left:5%;width:95%;">
+          <span class="glyphicon glyphicon-plus"></span>添加子标题
+        </button>
+        <!-- 添加按钮 -->
 
       </div>
+      <!-- 章节添加视图 -->
+
+      <!-- 添加按钮 -->
+      <button type="button" class="btn btn-primary btn-block" ng-click="addlevel(null)">
+        <span class="glyphicon glyphicon-plus"></span>
+        添加大标题
+      </button>
+      <!-- 添加按钮 -->
+
+    </div>
+
+    <!-- 选择时间 -->
+    <div class="modal fade" id="timer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:999">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">选择时间</h4>
+                </div>
+                <div class="modal-body">
+
+                  <div class="group">
+                    <span class="inputTitle">标签</span>
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-default dropdown-toggle"
+                          data-toggle="dropdown">
+                        默认 <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">功能</a></li>
+                        <li><a href="#">另一个功能</a></li>
+                        <li><a href="#">其他</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">分离的链接</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">提交更改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
     </div>
   </div>
 </div>
