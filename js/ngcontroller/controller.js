@@ -232,6 +232,7 @@ var controllers = angular.module("controller",[
 
     //第一次刷新
     $scope.searchtext
+    page = 0;
 
     filter = data;
     $scope.clickpage({page:page,active:true});
@@ -281,6 +282,81 @@ var controllers = angular.module("controller",[
 
 
 })
+.controller("projectManager",function($scope,$state,urlService,eventService,netReuqest,localstorage,getlistservice){
+
+  var page = 0;
+  var filter = "";
+  $scope.list = new Array();
+  //分页数据
+  $scope.listpage = new Array();
+  $scope.searchtext = "";
+
+  //获取数据
+  $scope.clickpage = function (item){
+    page = item.page;
+    getlistservice.getlist($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
+  }
+
+  //第一次数据
+  $scope.clickpage({page:page,active:true});
+  //上一个
+  $scope.prevois = function (){
+
+    page = getlistservice.prevois($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
+  }
+  //下一个
+  $scope.next = function (){
+
+    page = getlistservice.next($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
+  }
+
+  //查询
+  $scope.search = function(){
+
+    //第一次刷新
+    filter = $scope.searchtext;
+    if ($scope.searchtext == "") {
+      filter = "";
+    }
+    $scope.clickpage({page:page,active:true});
+  };
+
+  //监听刷新通知
+  eventService.on("reloadlist", function (data) {
+
+    //第一次刷新
+    $scope.searchtext
+    page = 0;
+
+    filter = data;
+    $scope.clickpage({page:page,active:true});
+  });
+
+  //按钮点击 添加选中的颜色
+  $scope.click = function(item){
+    item.active = 2;
+    $scope.list = $scope.list;
+
+    //进入详情页面
+    window.location.href = urlService.mainservice+"#!/detial?id="+item.id;
+  }
+
+  //经过按钮 添加选中的颜色
+  $scope.over = function(item){
+    if (item.active != 2) {
+      item.active = 1;
+      $scope.list = $scope.list;
+    }
+  }
+
+  //离开按钮 去掉选中的颜色
+  $scope.leave = function(item){
+    if (item.active != 2) {
+      item.active = 0;
+      $scope.list = $scope.list;
+    }
+  }
+})
 .controller("newproject",function($scope,$state,urlService,netReuqest){
 
   Array.prototype.indexOf = function(val) {
@@ -314,49 +390,7 @@ var controllers = angular.module("controller",[
     $scope.minites.push(i);
   }
 
-  $scope.levellist = [
-    {title:"第一章",
-      timer:"30s",
-      subitems:[{
-        title:"第一节",
-        timer:"10s",
-        message:"生命的活力"
-      },
-      {
-        title:"第二节",
-        timer:"20s",
-        message:"扩胸运动"
-      },
-      {
-        title:"第三节",
-        timer:"30s",
-        message:"伸展运动"
-      }]
-    },
-
-    {title:"第二章",
-      timer:"30s",
-      subitems:[{
-        timer:"15s",
-        title:"第二节",
-        message:"生命的活力"
-      },
-      {
-        timer:"30s",
-        title:"第二节",
-        message:"生命的活力"
-      }]
-    },
-
-    {title:"第三章",
-     timer:"15s",
-     subitems:[{
-        timer:"15s",
-        title:"第三节",
-        message:"生命的活力"
-     }]
-    },
-  ];
+  $scope.levellist = [];
 
   $scope.showTime = function(item){
 
@@ -413,7 +447,7 @@ var controllers = angular.module("controller",[
     if (item == null) {
 
       var obj = {
-        title:"我是新加的标题",
+        title:"",
         timer:"5m",
         subitems:[],
       };
@@ -423,7 +457,7 @@ var controllers = angular.module("controller",[
     else {
 
       var obj = {
-        title:"我是新加的标题",
+        title:"",
         timer:"5m",
         subitems:[],
       };
