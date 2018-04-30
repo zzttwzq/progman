@@ -49,4 +49,10 @@ var app = angular.module("app",[
     controller:'datemanager',
     cache: false,
   })
+  .state('projectdetial',{
+    url: '/projectdetial',
+    templateUrl: "/progman/tpls/projectDetial.html",
+    controller:'projectdetial',
+    cache: false,
+  })
 });

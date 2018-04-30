@@ -60,6 +60,30 @@
     background-color: #d9534f;
     border-color: #d43f3a;
   }
+
+  .imgchoseBG{
+    position: relative;
+    background: green;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    border-radius: 50px;
+    overflow: hidden;
+  }
+  .imgchose{
+    opacity: 0;
+    /* background: rgba(0,0,0,0.5); */
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 9999;
+  }
+  .imgs{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+  }
 </style>
 
 <div class="main animated fadeInRight">
@@ -91,14 +115,11 @@
         <div class="btn-group">
           <button type="button" class="btn btn-default dropdown-toggle"
               data-toggle="dropdown">
-            默认 <span class="caret"></span>
+            {{selectedTag}} <span class="caret"></span>
           </button>
+
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">功能</a></li>
-            <li><a href="#">另一个功能</a></li>
-            <li><a href="#">其他</a></li>
-            <li class="divider"></li>
-            <li><a href="#">分离的链接</a></li>
+              <li ng-repeat="item in tags" ng-click="selectTag(item)"><a>{{item}}</a></li>
           </ul>
         </div>
       </div>
@@ -109,6 +130,14 @@
     </div>
 
     <div class="sepLine"></div>
+
+    <!-- <div class="viewcontent">
+        <form class="imgchoseBG" action="../myphp/business/progman/project.php?action=uploadImg" method="post" enctype="multipart/form-data">
+          <input class="imgchose" ng-change="imgchange(this.value)" type="file" name="file" id="file" /> 
+          <img class="imgs"  ng-src="{{selectImg}}" alt="">
+        </form>
+    </div>
+    <div class="sepLine"></div> -->
 
     <div class="viewcontent">
       <h3>添加章节</h3>

@@ -26,7 +26,7 @@ var factorys = angular.module("factory",[])
 })
 .factory('urlService', function() {
   var service = {
-    mainservice:"http://114.67.71.172/progman/",
+    mainservice:"http://localhost/progman/",
 
     adduser:"/myphp/business/progman/login.php?action=adduser",
     saveuser:"/myphp/business/progman/login.php?action=saveuser",
@@ -145,10 +145,14 @@ var factorys = angular.module("factory",[])
 
     list.splice(0,list.length); //清空数组
     listpage.splice(0,listpage.length); //清空数组
+    var usrInfo = userManager.getUsrInfo();
 
     var data = {};
     data.page = page;
     data.filter = filter;
+    if (usrInfo) {
+      data.userid = usrInfo.userid;
+    }
     netReuqest.getlist(url,data,function(response){
 
       //列表数据
@@ -156,15 +160,18 @@ var factorys = angular.module("factory",[])
 
         var cellItem = response.data.data[i];
 
-        var array1 = cellItem.datetime.split(" ");
-        var array2 = array1[0].split("-");
+        if (cellItem.datetime){
 
-        cellItem.year = array2[0];
-        cellItem.month = array2[1]+"月"+array2[2]+"日";
+          var array1 = cellItem.datetime.split(" ");
+          var array2 = array1[0].split("-");
+  
+          cellItem.year = array2[0];
+          cellItem.month = array2[1]+"月"+array2[2]+"日";
+        }
 
-        var usrItem = userManager.getUsrInfo();
-        if (usrItem) {
-          cellItem.usrimg = usrItem.userimg;
+        if (usrInfo) {
+          cellItem.usrimg = usrInfo.userimg;
+          cellItem.usrName = usrInfo.username;
         }
 
         list.push(cellItem);

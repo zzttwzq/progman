@@ -6,6 +6,20 @@ var controllers = angular.module("controller",[
 
   // initLib.startConfig();
 
+  Array.prototype.indexOf = function(val) {
+    for (var i = 0; i < this.length; i++) {
+      if (this[i] == val) return i;
+    }
+    return -1;
+  };
+
+  Array.prototype.remove = function(val) {
+    var index = this.indexOf(val);
+    if (index > -1) {
+      this.splice(index, 1);
+    }
+  };
+
   //**********************************************************************
   var usrItem = userManager.getUsrInfo();
   $scope.usrimg = "";
@@ -197,14 +211,13 @@ var controllers = angular.module("controller",[
   $scope.listpage = new Array();
   $scope.searchtext = "";
 
+  //==============//============== 查询数据请求 ==============//==============//==============
   //获取数据
   $scope.clickpage = function (item){
     page = item.page;
     getlistservice.getlist($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
   }
 
-  //第一次数据
-  $scope.clickpage({page:page,active:true});
   //上一个
   $scope.prevois = function (){
 
@@ -227,6 +240,10 @@ var controllers = angular.module("controller",[
     $scope.clickpage({page:page,active:true});
   };
 
+  //第一次数据
+  $scope.search();
+
+  //==============//============== 其他功能 ==============//==============//==============
   //监听刷新通知
   eventService.on("reloadlist", function (data) {
 
@@ -278,11 +295,7 @@ var controllers = angular.module("controller",[
     }
   }
 })
-.controller("project",function($scope){
-
-
-})
-.controller("projectManager",function($scope,$state,urlService,eventService,netReuqest,localstorage,getlistservice){
+.controller("project",function($scope,$state,urlService,eventService,netReuqest,localstorage,getlistservice){
 
   var page = 0;
   var filter = "";
@@ -291,23 +304,22 @@ var controllers = angular.module("controller",[
   $scope.listpage = new Array();
   $scope.searchtext = "";
 
+  //==============//============== 查询数据请求 ==============//==============//==============
   //获取数据
   $scope.clickpage = function (item){
     page = item.page;
-    getlistservice.getlist($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
+    getlistservice.getlist($scope.list,$scope.listpage,urlService.getProjectList,page,filter);
   }
 
-  //第一次数据
-  $scope.clickpage({page:page,active:true});
   //上一个
   $scope.prevois = function (){
 
-    page = getlistservice.prevois($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
+    page = getlistservice.prevois($scope.list,$scope.listpage,urlService.getProjectList,page,filter);
   }
   //下一个
   $scope.next = function (){
 
-    page = getlistservice.next($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
+    page = getlistservice.next($scope.list,$scope.listpage,urlService.getProjectList,page,filter);
   }
 
   //查询
@@ -321,6 +333,10 @@ var controllers = angular.module("controller",[
     $scope.clickpage({page:page,active:true});
   };
 
+  //第一次数据
+  $scope.search();
+
+  //==============//============== 其他功能 ==============//==============//==============
   //监听刷新通知
   eventService.on("reloadlist", function (data) {
 
@@ -338,7 +354,40 @@ var controllers = angular.module("controller",[
     $scope.list = $scope.list;
 
     //进入详情页面
-    window.location.href = urlService.mainservice+"#!/detial?id="+item.id;
+    window.location.href = urlService.mainservice+"#!/projectdetial?id="+item.id;
+  }
+
+  //按钮点击 添加选中的颜色
+  $scope.edit = function(item){
+    item.active = 2;
+    $scope.list = $scope.list;
+
+    //进入详情页面
+    window.location.href = urlService.mainservice+"#!/newproject?id="+item.id;
+  }
+
+  //按钮点击 添加选中的颜色
+  $scope.delete = function(item){
+
+    if (confirm("是否确认删除？")){
+
+      netReuqest.updatedata(urlService.deleteProject,{id:item.id},function(response){
+
+        alert(response.data["msg"]);
+        if (response.data["result"] == 1) {
+
+          for (var i = 0; i <$scope.list.length; i++) {
+
+            if ($scope.list[i] == item) {
+
+              $scope.list.splice(i,1);
+            }
+          }
+
+          $scope.list = $scope.list;
+        }
+      });
+    }
   }
 
   //经过按钮 添加选中的颜色
@@ -359,20 +408,7 @@ var controllers = angular.module("controller",[
 })
 .controller("newproject",function($scope,$state,urlService,netReuqest){
 
-  Array.prototype.indexOf = function(val) {
-    for (var i = 0; i < this.length; i++) {
-      if (this[i] == val) return i;
-    }
-    return -1;
-  };
-
-  Array.prototype.remove = function(val) {
-    var index = this.indexOf(val);
-    if (index > -1) {
-      this.splice(index, 1);
-    }
-  };
-
+  // 变量
   $scope.day = [];
   $scope.hour = [];
   $scope.minites = [];
@@ -391,6 +427,34 @@ var controllers = angular.module("controller",[
   }
 
   $scope.levellist = [];
+  $scope.tags = ["原画","html","ios","javaScript","vue","php","unity3D","java"];
+  $scope.selectedTag = $scope.tags[0];
+  $scope.selectImg = "https://zzttwzq.top/progman/imgs/logo.jpg";
+
+  var itemid = window.location.href.split("?");
+  if (itemid.length > 1){
+
+    var ids = itemid[1].split("=");
+    //请求网络
+    netReuqest.updatedata(urlService.getProjectList,{page:"0",id:ids[1]},function(response){
+
+      var obj = response.data.data[0];
+      $scope.title = obj.title;
+      $scope.selectedTag = obj.tag;
+      $scope.levellist = JSON.parse(obj.listArray);
+    });
+  }
+
+  // 方法
+  $scope.imgchange = function (item){
+
+    $scope.selectImg = item;
+  }
+
+  $scope.selectTag = function (item){
+
+    $scope.selectedTag = item;
+  }
 
   $scope.showTime = function(item){
 
@@ -420,28 +484,74 @@ var controllers = angular.module("controller",[
 
   $scope.commit = function (){
 
-    if(confirm("是否确定保存？")){
+    if ($scope.title == ""){
+
+      alert("项目标题为必填项目。 ");
+    }else if ($scope.levellist.length == 0){
+
+      alert("项目列表为空。");
+    }else{
+
+      var lastitem = "";
+      for (var a=0; a<$scope.levellist.length; a++){
+
+        var allComplelte = false;
+        var item = $scope.levellist[a];
+
+        for (var i = 0;i<item.subitems.length;i++){
+
+          var obj = item.subitems[i];
+          if (obj.isfinished){
+
+            allComplelte = true;
+          }else{
+
+            if (lastitem == ""){
+
+              lastitem = obj.title;
+            }
+          }
+        }
+
+        if (allComplelte){
+
+          item.isfinished = true;
+        }
+      };
 
       var obj = {
         title:$scope.title,
-        tag:$scope.category,
-        list:JSON.stringify($scope.levellist)
+        tag:$scope.selectedTag,
+        listarray:JSON.stringify($scope.levellist),
+        linklearnid:"0",
+        lastitem:lastitem,
       }
+      
+      if (itemid.length > 1){
 
-      netReuqest.updatedata(urlService.saveuser,obj,function(response){
+        obj.id = itemid[1].split("=")[1];
+        netReuqest.updatedata(urlService.udpateProject,obj,function(response){
 
-        var usrObj = response.data['data'];
-        userManager.userLogin(usrObj.id,usrObj.name,usrObj.token,usrObj.usrimg)
-        window.location.reload(true);
-      });
+          alert("修改成功！");
+        });
+      }else{
 
-    }else{
+        netReuqest.updatedata(urlService.addProject,obj,function(response){
 
-      alert("取消保存！");
+          $scope.levellist = [];
+          $scope.title = "";
+          $scope.selectedTag = $scope.tags[0];
+          alert("添加成功！");
+        });
+      }
     }
   }
 
   $scope.addlevel = function (item) {
+
+    if($scope.levellist == ""){
+      $scope.levellist = [];
+    }
 
     // 增加章节
     if (item == null) {
@@ -450,6 +560,8 @@ var controllers = angular.module("controller",[
         title:"",
         timer:"5m",
         subitems:[],
+        isfinished:false,
+        finishlabel:"完成",
       };
       $scope.levellist.push(obj);
     }
@@ -460,6 +572,8 @@ var controllers = angular.module("controller",[
         title:"",
         timer:"5m",
         subitems:[],
+        isfinished:false,
+        finishlabel:"完成",
       };
       item.subitems.push(obj);
 
@@ -478,6 +592,110 @@ var controllers = angular.module("controller",[
       $scope.levellist = $scope.levellist;
     }
   };
+})
+.controller("projectdetial",function ($scope,netReuqest,urlService,$state,eventService) {
+
+  // 变量
+  $scope.day = [];
+  $scope.hour = [];
+  $scope.minites = [];
+  var selectItem = {};
+  for (var i = 0; i < 60; i++) {
+
+    if (i <= 30) {
+      $scope.day.push(i);
+    }
+
+    if (i <= 12) {
+      $scope.hour.push(i);
+    }
+
+    $scope.minites.push(i);
+  }
+
+  $scope.levellist = [];
+  $scope.tags = ["原画","html","ios","javaScript","vue","php","unity3D","java"];
+  $scope.selectedTag = $scope.tags[0];
+  $scope.selectImg = "https://zzttwzq.top/progman/imgs/logo.jpg";
+
+  var itemid = window.location.href.split("?");
+  if (itemid.length > 1){
+
+    var ids = itemid[1].split("=");
+    //请求网络
+    netReuqest.updatedata(urlService.getProjectList,{page:"0",id:ids[1]},function(response){
+
+      var obj = response.data.data[0];
+      $scope.title = obj.title;
+      $scope.selectedTag = obj.tag;
+      $scope.levellist = JSON.parse(obj.listArray);
+    });
+  }
+
+  $scope.finish = function (item){
+
+    if (item.isfinished) {
+      item.isfinished = false;
+      item.finishlabel = "完成";
+    }else{
+      item.isfinished = true;
+      item.finishlabel = "已完成";
+    }
+  }
+
+  $scope.commit = function (){
+
+    if ($scope.title == ""){
+
+      alert("项目标题为必填项目。 ");
+    }else if ($scope.levellist.length == 0){
+
+      alert("项目列表为空。");
+    }else{
+
+    var lastitem = "";
+    for (var a=0; a<$scope.levellist.length; a++){
+
+      var allComplelte = false;
+      var item = $scope.levellist[a];
+
+      for (var i = 0;i<item.subitems.length;i++){
+
+        var obj = item.subitems[i];
+        if (obj.isfinished){
+
+          allComplelte = true;
+        }else{
+
+          if (lastitem == ""){
+
+            lastitem = obj.title;
+          }
+        }
+      }
+
+      if (allComplelte){
+
+        item.isfinished = true;
+      }
+    };
+
+    var ids = itemid[1].split("=")[1];
+    var obj = {
+      id:ids,
+      title:$scope.title,
+      tag:$scope.selectedTag,
+      listarray:JSON.stringify($scope.levellist),
+      linklearnid:"0",
+      lastitem:lastitem,
+    }
+
+    netReuqest.updatedata(urlService.udpateProject,obj,function(response){
+
+      alert("修改成功！");
+    });
+    }
+  }
 })
 .controller("note",function($scope,$state,urlService,netReuqest){
 
@@ -632,23 +850,26 @@ var controllers = angular.module("controller",[
   //删除
   $scope.delete = function (item){
 
-    //请求网络
-    netReuqest.updatedata(urlService.deletetasklist,{id:item.id},function(response){
+    if (confirm("是否确认删除？")){
+      
+      //请求网络
+      netReuqest.updatedata(urlService.deletetasklist,{id:item.id},function(response){
 
-      alert(response.data["msg"]);
-      if (response.data["result"] == 1) {
+        alert(response.data["msg"]);
+        if (response.data["result"] == 1) {
 
-        for (var i = 0; i <$scope.list.length; i++) {
+          for (var i = 0; i <$scope.list.length; i++) {
 
-          if ($scope.list[i] == item) {
+            if ($scope.list[i] == item) {
 
-            $scope.list.splice(i,1);
+              $scope.list.splice(i,1);
+            }
           }
-        }
 
-        $scope.list = $scope.list;
-      }
-   });
+          $scope.list = $scope.list;
+        }
+    });
+    }
   }
 
   //编辑

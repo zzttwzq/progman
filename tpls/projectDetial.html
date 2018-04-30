@@ -1,0 +1,141 @@
+<style media="screen">
+    .titles{
+      margin-top: 60px;
+      margin-bottom: 30px;
+    }
+    .listview{
+      background: white;
+      border-radius: 10px;
+      width: 85%;
+      float: left;
+      overflow: hidden;
+    }
+    .addBtn{
+      margin-top: -60px;
+      margin-right: 125px;
+      float: right;
+    }
+  
+    /* 页面内容 */
+    .viewcontent{
+      margin:30px 30px;
+      margin-bottom: 10px;
+    }
+    .inputTitle{
+      float: left;
+      line-height: 30px;
+      margin-right: 20px;
+    }
+    .inputText{
+      width: 90%;
+      float: left;
+    }
+    .sepLine{
+      width:100%;
+      height:2px;
+      background:#dddddd;
+    }
+  
+    /* 章节列表 */
+    .levelCell{
+      width: 100%;
+    }
+    .subLevelCell
+    {
+      margin-left: 5%;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      width: 95%;
+    }
+    .unfinish{
+      cursor: pointer;
+      color: #fff;
+      background-color: #5cb85c;
+      border-color: #4cae4c;
+    }
+    .finished{
+      cursor: pointer;
+      color: #fff;
+      background-color: #5bc0de;
+      border-color: #46b8da;
+    }
+  
+  </style>
+  
+  <div class="main animated fadeInRight">
+    <div class="">
+      <h2 class="titles">项目详情</h2>
+  
+      <button type="button" class="btn btn-success addBtn" ng-click="commit()">保存</button>
+    </div>
+  
+    <div class="clearfix"></div>
+  
+    <div class="listview">
+      <div class="viewcontent">
+  
+        <!-- 标题和分类部分 -->
+        <div class="group">
+          <span class="inputTitle">标题</span>
+          <input type="text" class="form-control inputText" placeholder="请输入文章标题(必须)" ng-model="title">
+        </div>
+        <div class="clearfix"></div>
+        <div class="" style="width:100%;height:10px;"></div>
+        <!-- 标题和简介部分 -->
+  
+        <!-- 标签部分 -->
+        <div class="group">
+          <span class="inputTitle">标签</span>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle"
+                data-toggle="dropdown">
+              {{selectedTag}} <span class="caret"></span>
+            </button>
+  
+            <ul class="dropdown-menu" role="menu">
+                <li ng-repeat="item in tags" ng-click="selectTag(item)"><a>{{item}}</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="" style="width:100%;height:15px;"></div>
+        <!-- 标签部分 -->
+  
+      </div>
+  
+      <div class="sepLine"></div>
+  
+      <div class="viewcontent">
+        <h3>添加章节</h3>
+  
+        <!-- 章节添加视图 -->
+        <div class="levelCell" ng-repeat="item in levellist">
+  
+          <!-- 大标题 -->
+          <div class="input-group">
+            <span class="input-group-addon">大标题</span>
+            <input type="text" class="form-control" ng-model="item.title">
+            <span class="input-group-addon choseBtn" ng-class="{false:'finished',true:'unfinish'}[item.isfinished]" ng-click="finish(item)">{{item.finishlabel}}</span>
+          </div>
+          <!-- 大标题 -->
+  
+          <!-- 子标题 -->
+          <div class="subLevelCell" ng-repeat="subitem in item.subitems">
+  
+            <!-- 子标题 -->
+            <div class="input-group">
+              <span class="input-group-addon">子标题</span>
+              <input type="text" class="form-control" ng-model="subitem.title">
+              <span class="input-group-addon choseBtn" ng-class="{false:'finished',true:'unfinish'}[subitem.isfinished]" ng-click="finish(subitem)">{{subitem.finishlabel}}</span>
+            </div>
+            <!-- 子标题 -->
+          </div>
+          <!-- 子标题 -->
+  
+        </div>
+        <!-- 章节添加视图 -->
+  
+      </div>
+    </div>
+  </div>
+  
