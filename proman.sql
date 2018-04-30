@@ -71,7 +71,7 @@ CREATE TABLE `LOGIN` (
 
 LOCK TABLES `LOGIN` WRITE;
 /*!40000 ALTER TABLE `LOGIN` DISABLE KEYS */;
-INSERT INTO `LOGIN` VALUES (1,'吴志强','wu','111',27,'13023628319',100,'','2017-9-14 7:41',1,'https://zzttwzq.top/progman/imgs/logo.jpg'),(2,'','','',0,'',100,'a00b8a3edd1d1d6e322303fe9d44f608','18-04-25 02:31:21',1,'http://zzttwzq.top/progman/imgs/logo.jpg'),(4,'aaa','aaa','111',0,'',100,'d00d6b637379b441ac6c4d31b4ee7aeb','18-04-26 03:17:42',1,'http://zzttwzq.top/progman/imgs/logo.jpg'),(8,'123','123','1313',0,'',100,'2482d75329e177a01874d36290a92fc6','18-04-30 03:18:39',1,'http://zzttwzq.top/progman/imgs/logo.jpg');
+INSERT INTO `LOGIN` VALUES (1,'吴志强','wu','111',27,'13023628319',100,'','2017-9-14 7:41',1,'http://114.67.71.172/progman/imgs/logo.jpg'),(2,'','','',0,'',100,'a00b8a3edd1d1d6e322303fe9d44f608','18-04-25 02:31:21',1,'http://114.67.71.172/progman/imgs/logo.jpg'),(4,'aaa','aaa','111',0,'',100,'d00d6b637379b441ac6c4d31b4ee7aeb','18-04-26 03:17:42',1,'http://114.67.71.172/progman/imgs/logo.jpg'),(8,'123','123','1313',0,'',100,'2482d75329e177a01874d36290a92fc6','18-04-30 03:18:39',1,'http://114.67.71.172/progman/imgs/logo.jpg');
 /*!40000 ALTER TABLE `LOGIN` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,4 +147,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-30 15:32:24
+-- Dump completed on 2018-04-30 15:37:08
