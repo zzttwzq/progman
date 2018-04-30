@@ -26,7 +26,7 @@ var factorys = angular.module("factory",[])
 })
 .factory('urlService', function() {
   var service = {
-    mainservice:"http://localhost/progman/",
+    mainservice:"http://114.67.71.172/progman/",
 
     adduser:"/myphp/business/progman/login.php?action=adduser",
     saveuser:"/myphp/business/progman/login.php?action=saveuser",
