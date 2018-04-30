@@ -220,12 +220,10 @@ var controllers = angular.module("controller",[
 
   //上一个
   $scope.prevois = function (){
-
     page = getlistservice.prevois($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
   }
   //下一个
   $scope.next = function (){
-
     page = getlistservice.next($scope.list,$scope.listpage,urlService.gettasklist,page,filter);
   }
 
