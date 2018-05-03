@@ -497,7 +497,6 @@ var controllers = angular.module("controller",[
         var item = $scope.levellist[a];
 
         for (var i = 0;i<item.subitems.length;i++){
-
           var obj = item.subitems[i];
           if (obj.isfinished){
 
@@ -523,6 +522,7 @@ var controllers = angular.module("controller",[
         listarray:JSON.stringify($scope.levellist),
         linklearnid:"0",
         lastitem:lastitem,
+        progress:0,
       }
       
       if (itemid.length > 1){
@@ -651,47 +651,71 @@ var controllers = angular.module("controller",[
       alert("项目列表为空。");
     }else{
 
-    var lastitem = "";
-    for (var a=0; a<$scope.levellist.length; a++){
+      var lastitem = "";
+      var total = 0;
+      var complete = 0;
+      for (var a=0; a<$scope.levellist.length; a++){
 
-      var allComplelte = false;
-      var item = $scope.levellist[a];
+        var allComplelte = false;
+        var item = $scope.levellist[a];
 
-      for (var i = 0;i<item.subitems.length;i++){
+        if (item.subitems.length > 0){
 
-        var obj = item.subitems[i];
-        if (obj.isfinished){
-
-          allComplelte = true;
+          total ++;
+          complete ++;
         }else{
 
-          if (lastitem == ""){
+          for (var i = 0;i<item.subitems.length;i++){
 
-            lastitem = obj.title;
+            total ++;
+  
+            var obj = item.subitems[i];
+            if (obj.isfinished){
+  
+              allComplelte = true;
+              complete ++;
+            }else{
+  
+              if (lastitem == ""){
+  
+                lastitem = obj.title;
+              }
+            }
           }
         }
+
+        if (allComplelte){
+
+          item.isfinished = true;
+        }
+      };
+
+      var obj = {
+        title:$scope.title,
+        tag:$scope.selectedTag,
+        listarray:JSON.stringify($scope.levellist),
+        linklearnid:"0",
+        lastitem:lastitem,
+        progress:complete/total,
       }
+      
+      if (itemid.length > 1){
 
-      if (allComplelte){
+        obj.id = itemid[1].split("=")[1];
+        netReuqest.updatedata(urlService.udpateProject,obj,function(response){
 
-        item.isfinished = true;
+          alert("修改成功！");
+        });
+      }else{
+
+        netReuqest.updatedata(urlService.addProject,obj,function(response){
+
+          $scope.levellist = [];
+          $scope.title = "";
+          $scope.selectedTag = $scope.tags[0];
+          alert("添加成功！");
+        });
       }
-    };
-
-    var ids = itemid[1].split("=")[1];
-    var obj = {
-      id:ids,
-      title:$scope.title,
-      tag:$scope.selectedTag,
-      listarray:JSON.stringify($scope.levellist),
-      linklearnid:"0",
-      lastitem:lastitem,
-    }
-
-    netReuqest.updatedata(urlService.udpateProject,obj,function(response){
-
-      alert("修改成功！");
-    });
     }
   }
 })
