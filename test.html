@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="test"></div>
+
+    <script>
+
+        var ua = window.navigator.userAgent.toLowerCase();  
+        var url_ios =  'weixin://';
+        var url_ios_download =  'http://www.wjtr.com/download/index.html';
+        var url_android = 'weixin://';
+        var url_android_download = 'https://itunes.apple.com/cn/app/jian-kang-mao-rang-yun-dong/id966436668?mt=8';
+        console.log(url_android);
+        
+        //通过window.navigator.userAgent来判断当前设备是IOS还是Android。
+        if(ua.match(/MicroMessenger/i) == 'micromessenger'){  
+
+            var test = window.document.getElementById("test");
+
+
+
+            if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+
+                var div = window.document.createElement("div");
+                div.innerText = "iphone";
+                test.appendChild(div);
+
+                var loadTime = new Date();
+                location.href = url_ios;
+                setTimeout(function(){
+                    var outTime = new Date()
+                    if(outTime - loadTime > 800){
+                        location.href = url_ios_download;
+                    }           
+                },1000)
+            }else if (navigator.userAgent.match(/android/i)) {  
+
+                var div = window.document.createElement("div");
+                div.innerText = "android";
+                test.appendChild(div);
+
+                var loadTime = new Date();
+                location.href = url_android;
+                setTimeout(function(){
+                    location.href = url_android_download;
+                },200)
+            }  
+
+
+            // window.location.href='downLoadForPhone';  
+        }
+        else{//非微信浏览器  
+
+            if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {  
+                var loadTime = new Date();
+                location.href = url_ios;
+                setTimeout(function(){
+                    var outTime = new Date()
+                    if(outTime - loadTime > 800){
+                        location.href = url_ios_download;
+                    }           
+                },1000)
+            }else if (navigator.userAgent.match(/android/i)) {  
+                var loadTime = new Date();
+                location.href = url_android;
+                setTimeout(function(){
+                    location.href = url_android_download;
+                },200)
+            }  
+        }
+
+    </script>
+</body>
+</html>

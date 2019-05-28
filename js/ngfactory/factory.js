@@ -30,21 +30,21 @@ var factorys = angular.module("factory",[])
 
     adduser:"/myphp/business/progman/login.php?action=adduser",
     saveuser:"/myphp/business/progman/login.php?action=saveuser",
-    login:"/myphp/business/progman/login.php?action=login",
-    logout:"/myphp/business/progman/login.php?action=logout",
+    login:"/mblog/index.php?c=user&a=login",
+    logout:"/mblog/index.php?c=user&a=logout",
 
     addscorelist:"/myphp/business/progman/learning.php?action=addScoreList",
-    getscorelist:"/myphp/business/progman/learning.php?action=getScoreList",
+    getscorelist:"/myphp/business/user/learning.php?action=getScoreList",
 
-    gettasklist:"/myphp/business/progman/learning.php?action=getTaskList",
-    addtasklist:"/myphp/business/progman/learning.php?action=addTaskList",
-    deletetasklist:"/myphp/business/progman/learning.php?action=deleteTaskList",
-    updatetasklist:"/myphp/business/progman/learning.php?action=updateTaskList",
+    gettasklist:"/mblog/index.php?c=learn&a=getLearnList",
+    addtasklist:"/mblog/index.php?c=learn&a=addLearn",
+    deletetasklist:"/mblog/index.php?c=learn&a=deleteLearn",
+    updatetasklist:"/mblog/index.php?c=learn&a=updateLearn",
 
-    getProjectList:"/myphp/business/progman/project.php?action=getProjectList",
-    addProject:"/myphp/business/progman/project.php?action=addProject",
-    deleteProject:"/myphp/business/progman/project.php?action=deleteProject",
-    udpateProject:"/myphp/business/progman/project.php?action=udpateProject",
+    getProjectList:"/mblog/index.php?c=project&a=getProjectList",
+    addProject:"/mblog/index.php?c=project&a=addProject",
+    deleteProject:"/mblog/index.php?c=project&a=deleteProject",
+    udpateProject:"/mblog/index.php?c=project&a=updateProject",
   };
   return service;
 })
